@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gui:page xmlns:gui="http://guiserver.martingeisse.name/v1">
+	<div class="container">
+		<gui:panel src="/navbar" />
+		<h1>Hello World!</h1>
+		<div>
+			This is a demo for the features of the GUI server.
+		</div>
+	</div>
+</gui:page>
