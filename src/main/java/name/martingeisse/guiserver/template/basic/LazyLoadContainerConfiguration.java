@@ -7,8 +7,8 @@
 package name.martingeisse.guiserver.template.basic;
 
 import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import name.martingeisse.wicket.component.misc.LongLoadingContainer;
 
 import org.apache.wicket.MarkupContainer;
@@ -17,7 +17,7 @@ import org.apache.wicket.MarkupContainer;
  * A lazy-loading container.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "lazy")
+@BindElement(localName = "lazy")
 public final class LazyLoadContainerConfiguration extends AbstractSingleContainerConfiguration {
 
 	/* (non-Javadoc)

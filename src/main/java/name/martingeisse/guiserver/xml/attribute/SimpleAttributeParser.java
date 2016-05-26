@@ -8,7 +8,7 @@ package name.martingeisse.guiserver.xml.attribute;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
 import name.martingeisse.guiserver.xml.value.ValueParser;
 
 /**

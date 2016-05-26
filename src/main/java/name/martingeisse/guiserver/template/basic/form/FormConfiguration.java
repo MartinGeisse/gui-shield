@@ -17,10 +17,9 @@ import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
 
@@ -38,7 +37,7 @@ import org.apache.wicket.model.IModel;
  * same models.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "form")
+@BindElement(localName = "form")
 public class FormConfiguration extends AbstractSingleContainerConfiguration implements IConfigurationSnippet {
 
 	/**

@@ -19,11 +19,11 @@ import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.UrlSubpathComponentGroupConfiguration;
-import name.martingeisse.guiserver.xml.builder.AttributeValueBindingOptionality;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.BindElement;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
+import name.martingeisse.guiserver.xml.generated.annotation.AttributeValueBindingOptionality;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import name.martingeisse.wicket.component.misc.PageParameterDrivenTabPanel;
 
 import org.apache.wicket.Component;
@@ -38,7 +38,7 @@ import org.apache.wicket.markup.html.panel.PanelMarkupSourcingStrategy;
  * Represents a tab panel.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "tabPanel")
+@BindElement(localName = "tabPanel")
 public final class TabPanelConfiguration extends AbstractSingleComponentConfiguration implements IConfigurationSnippet, UrlSubpathComponentGroupConfiguration {
 
 	/**
@@ -81,7 +81,7 @@ public final class TabPanelConfiguration extends AbstractSingleComponentConfigur
 	 * Adds a tab.
 	 * @param tab the tab to add
 	 */
-	@BindElement(localName = "tab")
+	@BindNestedElement(localName = "tab")
 	public void addTab(TabEntry tab) {
 		tabs.add(tab);
 	}

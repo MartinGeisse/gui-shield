@@ -11,10 +11,9 @@ import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.MarkupContent;
-import name.martingeisse.guiserver.xml.builder.BindContent;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.MarkupContainer;
 
 /**
@@ -23,7 +22,7 @@ import org.apache.wicket.MarkupContainer;
  * code for that section.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "demo")
+@BindElement(localName = "demo")
 public class ComponentDemoConfiguration extends AbstractSingleContainerConfiguration implements IConfigurationSnippet {
 
 	/**

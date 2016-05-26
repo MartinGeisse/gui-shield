@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.builder;
+package name.martingeisse.guiserver.xml.generated.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,11 +12,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation enables the automatic generation of a parser
- * for the annotated class, based on {@link BindAttribute} /
- * {@link BindElement} / {@link BindContent} annotations.
+ * This annotation can be used to bind an element to an annotated class.
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StructuredElement {
+public @interface BindElement {
+
+	/**
+	 * @return the local element name
+	 */
+	public String localName();
+	
 }

@@ -13,10 +13,9 @@ import name.martingeisse.guiserver.configuration.element.xml.PageConfiguration;
 import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -26,7 +25,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * cases to keep it simple.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "link")
+@BindElement(localName = "link")
 public final class LinkConfiguration extends AbstractSingleContainerConfiguration {
 
 	/**

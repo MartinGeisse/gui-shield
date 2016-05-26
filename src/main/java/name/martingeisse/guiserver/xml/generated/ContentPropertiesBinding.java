@@ -4,18 +4,22 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.properties;
+package name.martingeisse.guiserver.xml.generated;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.lang3.StringUtils;
+import name.martingeisse.guiserver.xml.XmlUtil;
 import name.martingeisse.guiserver.xml.content.ContentParser;
 import name.martingeisse.guiserver.xml.element.ElementParser;
 
 /**
  * Parses and stores content by expecting child elements only and passing
  * each element to a delegate binding.
+ * 
+ * @param <C> the type of the container object
+ * @param <P> the parser type that defines the semantics with respect to the XML reader's position
  */
 public final class ContentPropertiesBinding<C, P extends ContentParser<?>> implements PropertiesBinding<C, P> {
 
@@ -43,7 +47,7 @@ public final class ContentPropertiesBinding<C, P extends ContentParser<?>> imple
 				} else {
 					elementBinding.bind(reader, target);
 				}
-				reader.skipWhitespace();
+				XmlUtil.skipWhitespace(reader);
 				break;
 
 			case XMLStreamConstants.END_ELEMENT:

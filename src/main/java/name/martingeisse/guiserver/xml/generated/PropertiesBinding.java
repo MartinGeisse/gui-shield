@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.properties;
+package name.martingeisse.guiserver.xml.generated;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -20,7 +20,7 @@ import name.martingeisse.guiserver.xml.XmlParser;
  * through the static type.
  *
  * @param <C> the type of the container object
- * @param <P> the parser type
+ * @param <P> the parser type that defines the semantics with respect to the XML reader's position
  */
 @SuppressWarnings("unused")
 public interface PropertiesBinding<C, P extends XmlParser<?>> {

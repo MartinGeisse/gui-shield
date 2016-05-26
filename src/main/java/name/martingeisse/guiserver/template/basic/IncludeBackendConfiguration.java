@@ -12,11 +12,10 @@ import name.martingeisse.guiserver.component.HttpModel;
 import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.xml.builder.AttributeValueBindingOptionality;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.AttributeValueBindingOptionality;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 
@@ -24,7 +23,7 @@ import org.apache.wicket.markup.html.basic.Label;
  * This configuration represents a wicket panel that loads its content from the backend.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "includeBackend")
+@BindElement(localName = "includeBackend")
 public final class IncludeBackendConfiguration extends AbstractSingleComponentConfiguration {
 
 	/**

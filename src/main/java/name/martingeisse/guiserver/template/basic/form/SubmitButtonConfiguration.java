@@ -11,16 +11,15 @@ import javax.xml.stream.XMLStreamException;
 import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 
 /**
  * This configuration generates a submit button.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "submit")
+@BindElement(localName = "submit")
 public final class SubmitButtonConfiguration extends AbstractSingleComponentConfiguration {
 
 	/**

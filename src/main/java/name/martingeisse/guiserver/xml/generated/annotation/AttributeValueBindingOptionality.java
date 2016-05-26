@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.builder;
+package name.martingeisse.guiserver.xml.generated.annotation;
 
 /**
  * Specifies whether an attribute is optional, and whether it has

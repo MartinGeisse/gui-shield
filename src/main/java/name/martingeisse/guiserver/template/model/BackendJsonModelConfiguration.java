@@ -7,10 +7,9 @@
 package name.martingeisse.guiserver.template.model;
 
 import name.martingeisse.guiserver.backend.BackendHttpClient;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -18,7 +17,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  *
  */
 @StructuredElement
-@RegisterComponentElement(localName = "backendJsonModel")
+@BindElement(localName = "backendJsonModel")
 public class BackendJsonModelConfiguration extends AbstractModelConfiguration {
 
 	/**

@@ -15,7 +15,6 @@ import name.martingeisse.guiserver.xml.element.AbstractEmptyElementParser;
 import name.martingeisse.guiserver.xml.element.AttributeSelectedElementParser;
 import name.martingeisse.guiserver.xml.value.IntegerValueParser;
 import name.martingeisse.guiserver.xml.value.StringValueParser;
-
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;

@@ -30,7 +30,7 @@ import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCode;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCodeParser;
 import name.martingeisse.guiserver.template.model.BackendJsonModelConfiguration;
 import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.content.DelegatingContentParser;
+import name.martingeisse.guiserver.xml.oldstuff.DelegatingContentParser;
 import name.martingeisse.guiserver.xml.value.BooleanValueParser;
 import name.martingeisse.guiserver.xml.value.IntegerValueParser;
 import name.martingeisse.guiserver.xml.value.StringValueParser;

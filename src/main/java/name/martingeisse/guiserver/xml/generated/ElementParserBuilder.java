@@ -4,84 +4,69 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.builder;
+package name.martingeisse.guiserver.xml.generated;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
-
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
 import name.martingeisse.guiserver.xml.attribute.AttributeParser;
 import name.martingeisse.guiserver.xml.attribute.SimpleAttributeParser;
 import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.content.ContentParserRegistry;
-import name.martingeisse.guiserver.xml.element.ClassInstanceElementParser;
-import name.martingeisse.guiserver.xml.element.ContentParserWrapper;
+import name.martingeisse.guiserver.xml.content.MarkupContentParser;
+import name.martingeisse.guiserver.xml.element.ElementContentParser;
 import name.martingeisse.guiserver.xml.element.ElementParser;
-import name.martingeisse.guiserver.xml.element.ElementParserRegistry;
-import name.martingeisse.guiserver.xml.properties.ContentPropertiesBinding;
-import name.martingeisse.guiserver.xml.properties.NameSelectedPropertiesBinding;
-import name.martingeisse.guiserver.xml.properties.ParserToMethodBinding;
-import name.martingeisse.guiserver.xml.properties.PropertiesBinding;
+import name.martingeisse.guiserver.xml.generated.annotation.AttributeValueBindingOptionality;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
+import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
+import name.martingeisse.guiserver.xml.value.RegisteredValueParserProvider;
 import name.martingeisse.guiserver.xml.value.ValueParser;
-import name.martingeisse.guiserver.xml.value.ValueParserRegistry;
 
 /**
- * Helps build an {@link ClassInstanceElementParser}.
- * 
- * This object is constructed with reference to existing attribute/element/parser registries. Changes to those registries
- * (such as newly registered parsers) will be visible through this builder!
+ * Helps build a {@link ClassInstanceElementParser}.
  */
+@Singleton
 public final class ElementParserBuilder {
 
-	/**
-	 * the valueParserRegistry
-	 */
-	private final ValueParserRegistry valueParserRegistry;
+	private final Provider<Set<RegisteredValueParserProvider>> valueParserProviderSetProvider;
+	private final MarkupContentParser defaultContentParser;
 
 	/**
-	 * the elementParserRegistry
-	 */
-	private final ElementParserRegistry elementParserRegistry;
-	
-	/**
-	 * the contentParserRegistry
-	 */
-	private final ContentParserRegistry contentParserRegistry;
-	
-	/**
 	 * Constructor.
-	 * @param valueParserRegistry the value parser registry
-	 * @param elementParserRegistry the child-element parser registry
-	 * @param contentParserRegistry the content parser registry
+	 * @param valueParserProviderSetProvider (injected)
+	 * @param defaultContentParser (injected)
 	 */
-	public ElementParserBuilder(ValueParserRegistry valueParserRegistry, ElementParserRegistry elementParserRegistry, ContentParserRegistry contentParserRegistry) {
-		this.valueParserRegistry = valueParserRegistry;
-		this.elementParserRegistry = elementParserRegistry;
-		this.contentParserRegistry = contentParserRegistry;
+	@Inject
+	public ElementParserBuilder(final Provider<Set<RegisteredValueParserProvider>> valueParserProviderSetProvider, final MarkupContentParser defaultContentParser) {
+		this.valueParserProviderSetProvider = valueParserProviderSetProvider;
+		this.defaultContentParser = defaultContentParser;
 	}
 
 	/**
 	 * Builds the binding.
+	 * @param targetClass the class to build a binding for
+	 * @return the element parser for that class
 	 */
-	public <T> ElementParser<T> build(Class<? extends T> targetClass) {
-		if (targetClass.getAnnotation(StructuredElement.class) == null) {
-			throw new IllegalArgumentException("class is not annotated with " + StructuredElement.class.getSimpleName() + ": " + targetClass);
-		}
+	public <T> ElementParser<T> build(final Class<? extends T> targetClass) {
 		try {
-			Constructor<? extends T> constructor = targetClass.getConstructor();
+			final Constructor<? extends T> constructor = targetClass.getConstructor();
 			List<PropertiesBinding<T, ? extends AttributeParser<?>>> attributeBindings = new ArrayList<>();
 			NameSelectedPropertiesBinding<T, ElementParser<?>> elementBinding = new NameSelectedPropertiesBinding<T, ElementParser<?>>();
 			boolean hasElementBinding = false;
 			PropertiesBinding<T, ? extends ContentParser<?>> contentBinding = null;
-			for (Method method : targetClass.getMethods()) {
-				BindAttribute attributeAnnotation = method.getAnnotation(BindAttribute.class);
-				BindElement elementAnnotation = method.getAnnotation(BindElement.class);
-				BindContent contentAnnotation = method.getAnnotation(BindContent.class);
+			for (final Method method : targetClass.getMethods()) {
+				final BindAttribute attributeAnnotation = method.getAnnotation(BindAttribute.class);
+				final BindNestedElement elementAnnotation = method.getAnnotation(BindNestedElement.class);
+				final BindContent contentAnnotation = method.getAnnotation(BindContent.class);
 				if (count(attributeAnnotation) + count(elementAnnotation) + count(contentAnnotation) > 1) {
-					throw new RuntimeException("cannot use more than one of " + BindAttribute.class + ", " + BindElement.class + ", " + BindContent.class + " for method " + method.getName() + " of class " + targetClass);
+					throw new RuntimeException("cannot use more than one of " + BindAttribute.class + ", " + BindNestedElement.class + ", " + BindContent.class + " for method " + method.getName() + " of class " + targetClass);
 				} else if (attributeAnnotation != null) {
 					attributeBindings.add(createAttributeBinding(method));
 				} else if (elementAnnotation != null) {
@@ -104,14 +89,14 @@ public final class ElementParserBuilder {
 					contentBinding = new ContentPropertiesBinding<>(elementBinding);
 				}
 			}
-			return new ClassInstanceElementParser<T>(constructor, attributeBindingsArray, contentBinding);			
-		} catch (Exception e) {
+			return new ClassInstanceElementParser<T>(constructor, attributeBindingsArray, contentBinding);
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	//
-	private int count(Object o) {
+	private int count(final Object o) {
 		return (o == null ? 0 : 1);
 	}
 
@@ -119,86 +104,86 @@ public final class ElementParserBuilder {
 	 * Creates a binding between an attribute and a method. This is a separate
 	 * method to allow P (the type of the constructor parameter) to be used as a static
 	 * type variable.
-	 * 
+	 *
 	 * @throws Exception on errors
 	 */
-	private <T, P> PropertiesBinding<T, AttributeParser<P>> createAttributeBinding(Method method) throws Exception {
-		Class<?> parameterType = determineParameterType(BindAttribute.class, method);
-		
+	private <T, P> PropertiesBinding<T, AttributeParser<P>> createAttributeBinding(final Method method) throws Exception {
+		final Class<?> parameterType = determineParameterType(BindAttribute.class, method);
+
 		// extract data from the annotation
-		BindAttribute annotation = method.getAnnotation(BindAttribute.class);
-		String name = annotation.name();
-		boolean optional = (annotation.optionality() != AttributeValueBindingOptionality.MANDATORY);
-		String defaultValue = (annotation.optionality() == AttributeValueBindingOptionality.OPTIONAL_WITH_DEFAULT ? annotation.defaultValue() : null);
+		final BindAttribute annotation = method.getAnnotation(BindAttribute.class);
+		final String name = annotation.name();
+		final boolean optional = (annotation.optionality() != AttributeValueBindingOptionality.MANDATORY);
+		final String defaultValue = (annotation.optionality() == AttributeValueBindingOptionality.OPTIONAL_WITH_DEFAULT ? annotation.defaultValue() : null);
 		if (annotation.optionality() == AttributeValueBindingOptionality.OPTIONAL && parameterType.isPrimitive()) {
 			throw new RuntimeException("cannot bind an optional attribute without default value to a parameter of primitive type. Attribute name: " + name);
 		}
-		
+
 		// determine the value parser
-		ValueParser<?> untypedValueParser = determineParser(method, annotation.type(), parameterType, t -> valueParserRegistry.getParser(t));
+		final ValueParser<?> untypedValueParser = determineParser(method, annotation.type(), parameterType, t -> valueParserRegistry.getParser(t));
 		@SuppressWarnings("unchecked")
-		ValueParser<P> valueParser = (ValueParser<P>)untypedValueParser;
+		final ValueParser<P> valueParser = (ValueParser<P>)untypedValueParser;
 
 		// build the binding
-		AttributeParser<P> attributeParser = new SimpleAttributeParser<>(name, optional, defaultValue, valueParser);
+		final AttributeParser<P> attributeParser = new SimpleAttributeParser<>(name, optional, defaultValue, valueParser);
 		PropertiesBinding<T, AttributeParser<P>> binding = new ParserToMethodBinding<T, P, AttributeParser<P>>(attributeParser, method);
 		return binding;
-		
+
 	}
 
 	/**
 	 * Creates a binding between an element and a method. This is a separate
 	 * method to allow P (the type of the constructor parameter) to be used as a static
 	 * type variable.
-	 * 
+	 *
 	 * @throws Exception on errors
 	 */
-	private <T, P> PropertiesBinding<T, ElementParser<P>> createElementBinding(Method method) throws Exception {
-		Class<?> parameterType = determineParameterType(BindElement.class, method);
-		
+	private <T, P> PropertiesBinding<T, ElementParser<P>> createElementBinding(final Method method) throws Exception {
+		final Class<?> parameterType = determineParameterType(BindNestedElement.class, method);
+
 		// extract data from the annotation
-		BindElement annotation = method.getAnnotation(BindElement.class);
-		
+		final BindNestedElement annotation = method.getAnnotation(BindNestedElement.class);
+
 		// determine the element parser
-		Function<Class<?>, ? extends ElementParser<P>> parserProvider = this::getOrCreateElementParser;
-		ElementParser<?> untypedElementParser = determineParser(method, annotation.type(), parameterType, parserProvider);
+		final Function<Class<?>, ? extends ElementParser<P>> parserProvider = this::getOrCreateElementParser;
+		final ElementParser<?> untypedElementParser = determineParser(method, annotation.type(), parameterType, parserProvider);
 		@SuppressWarnings("unchecked")
-		ElementParser<P> elementParser = (ElementParser<P>)untypedElementParser;
+		final ElementParser<P> elementParser = (ElementParser<P>)untypedElementParser;
 
 		// build the binding
 		PropertiesBinding<T, ElementParser<P>> binding = new ParserToMethodBinding<T, P, ElementParser<P>>(elementParser, method);
 		return binding;
-		
+
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
-	private <T> ElementParser<T> getOrCreateElementParser(Class<?> targetClass) {
+	private <T> ElementParser<T> getOrCreateElementParser(final Class<?> targetClass) {
 		@SuppressWarnings("unchecked")
-		Class<T> targetClassTyped = (Class<T>)targetClass;
-		
+		final Class<T> targetClassTyped = (Class<T>)targetClass;
+
 		// check for a pre-registered or previously created parser
 		ElementParser<T> parser = elementParserRegistry.getParser(targetClassTyped);
 		if (parser != null) {
 			return parser;
 		}
-		
+
 		// check if a structured-element parser can be created automatically
 		if (targetClass.getAnnotation(StructuredElement.class) != null) {
 			parser = build(targetClassTyped);
 			elementParserRegistry.addParser(targetClassTyped, parser);
 			return parser;
 		}
-		
+
 		// check if we can create a parser by wrapping a content parser
-		ContentParser<T> contentParser = contentParserRegistry.getParser(targetClassTyped);
+		final ContentParser<T> contentParser = contentParserRegistry.getParser(targetClassTyped);
 		if (contentParser != null) {
-			parser = new ContentParserWrapper<>(contentParser);
+			parser = new ElementContentParser<>(contentParser);
 			elementParserRegistry.addParser(targetClassTyped, parser);
 			return parser;
 		}
-		
+
 		throw new RuntimeException("cannot find parser for this class, and no @StructuredElement annotation is present: " + targetClass);
 	}
 
@@ -206,45 +191,45 @@ public final class ElementParserBuilder {
 	 * Creates a binding between element content and a method. This is a separate
 	 * method to allow P (the type of the constructor parameter) to be used as a static
 	 * type variable.
-	 * 
+	 *
 	 * @throws Exception on errors
 	 */
-	private <T, P> PropertiesBinding<T, ContentParser<P>> createContentBinding(Method method) throws Exception {
-		Class<?> parameterType = determineParameterType(BindContent.class, method);
-		
+	private <T, P> PropertiesBinding<T, ContentParser<P>> createContentBinding(final Method method) throws Exception {
+		final Class<?> parameterType = determineParameterType(BindContent.class, method);
+
 		// extract data from the annotation
-		BindContent annotation = method.getAnnotation(BindContent.class);
-		
+		final BindContent annotation = method.getAnnotation(BindContent.class);
+
 		// determine the content parser
-		ContentParser<?> untypedContentParser = determineParser(method, annotation.type(), parameterType, t -> contentParserRegistry.getParser(t));
+		final ContentParser<?> untypedContentParser = determineParser(method, annotation.type(), parameterType, t -> contentParserRegistry.getParser(t));
 		@SuppressWarnings("unchecked")
-		ContentParser<P> contentParser = (ContentParser<P>)untypedContentParser;
+		final ContentParser<P> contentParser = (ContentParser<P>)untypedContentParser;
 
 		// build the binding
 		PropertiesBinding<T, ContentParser<P>> binding = new ParserToMethodBinding<T, P, ContentParser<P>>(contentParser, method);
 		return binding;
-		
+
 	}
 
 	//
-	private Class<?> determineParameterType(Class<? extends Annotation> annotationClass, Method method) {
+	private Class<?> determineParameterType(final Class<? extends Annotation> annotationClass, final Method method) {
 		if (method.getParameterCount() != 1) {
 			throw new RuntimeException("@" + annotationClass.getSimpleName() + " used for method with wrong number of parameters: " + method);
 		}
 		return method.getParameterTypes()[0];
 	}
-	
+
 	//
-	private <P> P determineParser(Method method, Class<?> specifiedType, Class<?> parameterType, Function<Class<?>, ? extends P> parserRegistry) throws Exception {
-		Class<?> conversionType = (specifiedType == void.class ? parameterType : specifiedType);
+	private <P> P determineParser(final Method method, final Class<?> specifiedType, final Class<?> parameterType, final Function<Class<?>, ? extends P> parserRegistry) throws Exception {
+		final Class<?> conversionType = (specifiedType == void.class ? parameterType : specifiedType);
 		if (!parameterType.isAssignableFrom(conversionType)) {
 			throw new RuntimeException("incompatible conversion type " + conversionType + " for method " + method);
 		}
-		P parser = parserRegistry.apply(conversionType);
+		final P parser = parserRegistry.apply(conversionType);
 		if (parser == null) {
 			throw new RuntimeException("no parser available for conversion type " + conversionType + " for method " + method);
 		}
 		return parser;
 	}
-	
+
 }

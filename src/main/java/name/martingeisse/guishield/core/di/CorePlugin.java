@@ -6,8 +6,9 @@
 
 package name.martingeisse.guishield.core.di;
 
-import name.martingeisse.guiserver.xml.value.BuiltinStandardValueParserProvider;
-import name.martingeisse.guiserver.xml.value.StandardValueParserProvider;
+import name.martingeisse.guiserver.xml.element.RegisteredComponentParser;
+import name.martingeisse.guiserver.xml.value.BuiltinValueParserProvider;
+import name.martingeisse.guiserver.xml.value.RegisteredValueParserProvider;
 
 /**
  * This is a pseudo-plugin that adds the core extension points and extensions.
@@ -17,9 +18,15 @@ public final class CorePlugin extends Plugin {
 	// override
 	@Override
 	protected void configure() {
+		
 		defineExtensionPoint(ApplicationStartupListener.class);
-		defineExtensionPoint(StandardValueParserProvider.class);
-		extend(StandardValueParserProvider.class, BuiltinStandardValueParserProvider.class);
+		
+		defineExtensionPoint(RegisteredValueParserProvider.class);
+		extend(RegisteredValueParserProvider.class, BuiltinValueParserProvider.class);
+		
+		defineExtensionPoint(RegisteredComponentParser.class);
+		// TODO standard components
+		
 	}
 
 }

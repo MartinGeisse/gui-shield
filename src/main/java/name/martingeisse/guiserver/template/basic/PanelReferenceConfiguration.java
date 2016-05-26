@@ -15,17 +15,16 @@ import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 
 /**
  * Configuration for using a gui:panel defined elsewhere.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "panel")
+@BindElement(localName = "panel")
 public class PanelReferenceConfiguration extends AbstractSingleComponentConfiguration implements IConfigurationSnippet {
 
 	/**

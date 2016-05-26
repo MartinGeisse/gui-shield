@@ -6,8 +6,7 @@
 
 package name.martingeisse.guiserver.template;
 
-import name.martingeisse.common.terms.IConsumer;
-
+import java.util.function.Consumer;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
@@ -30,6 +29,6 @@ public interface ComponentGroupConfiguration {
 	 * 
 	 * @param consumer the consumer to give components to
 	 */
-	public void buildComponents(IConsumer<Component> consumer);
+	public void buildComponents(Consumer<Component> consumer);
 
 }

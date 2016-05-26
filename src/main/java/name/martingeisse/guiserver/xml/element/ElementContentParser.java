@@ -15,8 +15,10 @@ import name.martingeisse.guiserver.xml.content.ContentParser;
  * This wrapper wraps a content parser and makes it behave as an
  * element parser. This element parser ignores the element tags
  * and its attributes, and just parses the element content.
+ * 
+ * @param <T> the parsed type
  */
-public final class ContentParserWrapper<T> implements ElementParser<T> {
+public final class ElementContentParser<T> implements ElementParser<T> {
 
 	/**
 	 * the contentParser
@@ -27,7 +29,7 @@ public final class ContentParserWrapper<T> implements ElementParser<T> {
 	 * Constructor.
 	 * @param contentParser the wrapped content parser
 	 */
-	public ContentParserWrapper(ContentParser<T> contentParser) {
+	public ElementContentParser(ContentParser<T> contentParser) {
 		this.contentParser = contentParser;
 	}
 

@@ -6,16 +6,16 @@
 
 package name.martingeisse.guiserver.template;
 
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.BindContent;
-import name.martingeisse.guiserver.xml.builder.BindElement;
-import name.martingeisse.guiserver.xml.builder.ElementParserBuilder;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.content.ContentParser;
 import name.martingeisse.guiserver.xml.content.ContentParserRegistry;
 import name.martingeisse.guiserver.xml.element.ElementParser;
 import name.martingeisse.guiserver.xml.element.ElementParserRegistry;
 import name.martingeisse.guiserver.xml.element.NameSelectedElementParser;
+import name.martingeisse.guiserver.xml.generated.ElementParserBuilder;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
+import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import name.martingeisse.guiserver.xml.value.ValueParser;
 import name.martingeisse.guiserver.xml.value.ValueParserRegistry;
 
@@ -77,7 +77,7 @@ public final class RecursiveContentParserBuilder<C> {
 	}
 
 	/**
-	 * Adds an element parser that can be used for {@link BindElement} annotations.
+	 * Adds an element parser that can be used for {@link BindNestedElement} annotations.
 	 * 
 	 * @param type the parsed type
 	 * @param parser the element parser
@@ -106,12 +106,12 @@ public final class RecursiveContentParserBuilder<C> {
 	
 	/**
 	 * Adds a component group configuration class to this builder. The class must be annotated
-	 * with {@link RegisterComponentElement}.
+	 * with {@link BindElement}.
 	 * 
 	 * @param targetClass the class to add
 	 */
 	public void autoAddComponentElementParser(Class<? extends C> targetClass) {
-		RegisterComponentElement annotation = targetClass.getAnnotation(RegisterComponentElement.class);
+		BindElement annotation = targetClass.getAnnotation(BindElement.class);
 		if (annotation == null) {
 			throw new RuntimeException("class " + targetClass + " is not annotated with @RegisterComponentElement");
 		}

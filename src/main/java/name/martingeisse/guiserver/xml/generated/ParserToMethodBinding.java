@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.properties;
+package name.martingeisse.guiserver.xml.generated;
 
 import java.lang.reflect.Method;
 import javax.xml.stream.XMLStreamException;

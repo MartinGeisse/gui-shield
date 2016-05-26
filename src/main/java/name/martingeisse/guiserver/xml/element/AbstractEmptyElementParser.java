@@ -9,10 +9,15 @@ package name.martingeisse.guiserver.xml.element;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import name.martingeisse.guiserver.xml.XmlUtil;
 
 /**
  * Base class to implement a simple parser that accepts only empty elements, taking all
- * necessary information from attributes. 
+ * necessary information from attributes.
+ * 
+ * TODO refactor using lambdas
+ * 
+ * @param <T> the type being parsed
  */
 public abstract class AbstractEmptyElementParser<T> implements ElementParser<T> {
 
@@ -22,7 +27,7 @@ public abstract class AbstractEmptyElementParser<T> implements ElementParser<T> 
 		String elementLocalName = reader.getLocalName();
 		T result = createResult(reader);
 		reader.next();
-		reader.skipWhitespace();
+		XmlUtil.skipWhitespace(reader);
 		if (reader.getEventType() != XMLStreamConstants.END_ELEMENT) {
 			throw new RuntimeException("unexpected content in element " + elementLocalName);
 		}

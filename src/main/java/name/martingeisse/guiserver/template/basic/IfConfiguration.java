@@ -15,11 +15,10 @@ import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.MarkupContent;
 import name.martingeisse.guiserver.template.model.NamedModelReferenceBehavior;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.BindContent;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -30,7 +29,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
  * TODO support "else" branch.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "if")
+@BindElement(localName = "if")
 public class IfConfiguration extends AbstractComponentGroupConfiguration {
 
 	/**

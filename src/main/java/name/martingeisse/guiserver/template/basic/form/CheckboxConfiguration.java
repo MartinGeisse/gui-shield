@@ -15,12 +15,11 @@ import name.martingeisse.guiserver.component.FieldPathBehavior;
 import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.xml.builder.AttributeValueBindingOptionality;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.BindElement;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.AttributeValueBindingOptionality;
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.validation.IValidator;
@@ -29,7 +28,7 @@ import org.apache.wicket.validation.IValidator;
  * Represents a checkbox.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "checkbox")
+@BindElement(localName = "checkbox")
 public final class CheckboxConfiguration extends AbstractSingleComponentConfiguration {
 
 	/**
@@ -85,7 +84,7 @@ public final class CheckboxConfiguration extends AbstractSingleComponentConfigur
 	 * Adds a validator to this form field.
 	 * @param validator the validator to add
 	 */
-	@BindElement(localName = "validation")
+	@BindNestedElement(localName = "validation")
 	public void addValidator(IValidator<?> validator) {
 		validators.add(validator);
 	}

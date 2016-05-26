@@ -15,10 +15,9 @@ import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.model.NamedModelReferenceBehavior;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -31,7 +30,7 @@ import org.apache.wicket.model.IModel;
  * TODO rename to gui:foreach? Probably more intuitive to the average developer (has PHP experience, no Wicket experience)
  */
 @StructuredElement
-@RegisterComponentElement(localName = "list")
+@BindElement(localName = "list")
 public class ListViewConfiguration extends AbstractSingleContainerConfiguration implements IConfigurationSnippet {
 
 	/**

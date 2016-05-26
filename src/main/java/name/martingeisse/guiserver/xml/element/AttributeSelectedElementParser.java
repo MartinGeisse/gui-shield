@@ -15,6 +15,8 @@ import javax.xml.stream.XMLStreamReader;
 /**
  * This element parser selects one of several parsers based on
  * the value of an attribute.
+ * 
+ * @param <T> the parsed type
  */
 public class AttributeSelectedElementParser<T> implements ElementParser<T> {
 

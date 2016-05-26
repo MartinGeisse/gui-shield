@@ -14,17 +14,16 @@ import name.martingeisse.guiserver.component.FieldPathFeedbackMessageFilter;
 import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.xml.builder.BindAttribute;
-import name.martingeisse.guiserver.xml.builder.RegisterComponentElement;
 import name.martingeisse.guiserver.xml.builder.StructuredElement;
-
+import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 
 /**
  * A panel that shows feedback messages for a form component with a {@link FieldPathBehavior}.
  */
 @StructuredElement
-@RegisterComponentElement(localName = "feedback")
+@BindElement(localName = "feedback")
 public final class FieldPathFeedbackPanelConfiguration extends AbstractSingleComponentConfiguration {
 
 	/**

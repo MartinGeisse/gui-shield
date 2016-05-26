@@ -10,13 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
-
-import name.martingeisse.guiserver.xml.builder.BindContent;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 
 import com.google.common.collect.ImmutableList;
+import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
 
 /**
  * Base class for component group configurations that correspond to a single {@link MarkupContainer}.

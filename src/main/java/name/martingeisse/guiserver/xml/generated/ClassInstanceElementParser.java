@@ -4,21 +4,24 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.xml.element;
+package name.martingeisse.guiserver.xml.generated;
 
 import java.lang.reflect.Constructor;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import name.martingeisse.guiserver.xml.XmlUtil;
 import name.martingeisse.guiserver.xml.attribute.AttributeParser;
 import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.properties.PropertiesBinding;
+import name.martingeisse.guiserver.xml.element.ElementParser;
 
 /**
  * Parses an XML element by creating an instance of a Java class.
  * This parser then accepts attributes and child elements to retrieve
  * properties of that instance.
+ * 
+ * @param <T> the type of object being parsed
  */
 public class ClassInstanceElementParser<T> implements ElementParser<T> {
 
@@ -64,7 +67,7 @@ public class ClassInstanceElementParser<T> implements ElementParser<T> {
 		}
 		reader.next();
 		if (contentBinding == null) {
-			reader.skipWhitespace();
+			XmlUtil.skipWhitespace(reader);
 			if (reader.getEventType() != XMLStreamConstants.END_ELEMENT) {
 				throw new RuntimeException("unexpected content in element " + elementLocalName);
 			}

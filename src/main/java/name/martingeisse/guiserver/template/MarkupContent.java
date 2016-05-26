@@ -18,13 +18,13 @@ public final class MarkupContent {
 	/**
 	 * the entries
 	 */
-	private final MarkupContentEntry<ComponentGroupConfiguration>[] entries;
+	private final MarkupContentEntry[] entries;
 
 	/**
 	 * Constructor.
 	 * @param entries the entries
 	 */
-	public MarkupContent(MarkupContentEntry<ComponentGroupConfiguration>[] entries) {
+	public MarkupContent(MarkupContentEntry[] entries) {
 		this.entries = entries;
 	}
 
@@ -34,18 +34,10 @@ public final class MarkupContent {
 	 */
 	@SuppressWarnings("unchecked")
 	public MarkupContent(List<ComponentGroupConfiguration> components) {
-		this.entries = createArray(components.size());
+		this.entries = new MarkupContentEntry[components.size()];
 		for (int i=0; i<components.size(); i++) {
-			entries[i] = new MarkupContentEntry.ComponentGroup<ComponentGroupConfiguration>(components.get(i));
+			entries[i] = new MarkupContentEntry.ComponentGroup(components.get(i));
 		}
-	}
-
-	/**
-	 * 
-	 */
-	@SuppressWarnings("unchecked")
-	private MarkupContentEntry<ComponentGroupConfiguration>[] createArray(int size) {
-		return (MarkupContentEntry<ComponentGroupConfiguration>[])(new MarkupContentEntry<?>[size]);
 	}
 	
 	/**
@@ -54,8 +46,8 @@ public final class MarkupContent {
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
-		for (MarkupContentEntry<ComponentGroupConfiguration> entry : entries) {
+	public void assemble(ConfigurationAssembler assembler) throws XMLStreamException {
+		for (MarkupContentEntry entry : entries) {
 			entry.assemble(assembler);
 		}
 	}

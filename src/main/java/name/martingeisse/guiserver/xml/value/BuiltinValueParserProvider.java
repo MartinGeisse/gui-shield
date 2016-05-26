@@ -12,7 +12,7 @@ import com.google.inject.Singleton;
  * Provides the built-in parsers.
  */
 @Singleton
-public class BuiltinStandardValueParserProvider implements StandardValueParserProvider {
+public class BuiltinValueParserProvider implements RegisteredValueParserProvider {
 
 	// override
 	@Override

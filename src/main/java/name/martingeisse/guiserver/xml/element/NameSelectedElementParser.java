@@ -14,6 +14,8 @@ import javax.xml.stream.XMLStreamReader;
 /**
  * This element parser selects one of several parsers based on
  * the element name.
+ * 
+ * @param <T> the parsed type
  */
 public class NameSelectedElementParser<T> implements ElementParser<T> {
 
