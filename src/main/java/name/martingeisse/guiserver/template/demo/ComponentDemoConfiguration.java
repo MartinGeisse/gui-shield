@@ -11,9 +11,9 @@ import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.MarkupContent;
-import name.martingeisse.guiserver.xml.builder.StructuredElement;
-import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
-import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.builder.StructuredElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindContent;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
 import org.apache.wicket.MarkupContainer;
 
 /**

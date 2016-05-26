@@ -9,7 +9,7 @@ package name.martingeisse.guiserver.template.model;
 import name.martingeisse.guiserver.component.model.ModelProvider;
 import name.martingeisse.guiserver.component.model.SimpleModelProvidingContainer;
 import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
 

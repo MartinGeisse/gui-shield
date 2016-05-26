@@ -19,11 +19,11 @@ import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.UrlSubpathComponentGroupConfiguration;
-import name.martingeisse.guiserver.xml.builder.StructuredElement;
-import name.martingeisse.guiserver.xml.generated.annotation.AttributeValueBindingOptionality;
-import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
-import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
-import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.builder.StructuredElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.AttributeValueBindingOptionality;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindNestedElement;
 import name.martingeisse.wicket.component.misc.PageParameterDrivenTabPanel;
 
 import org.apache.wicket.Component;

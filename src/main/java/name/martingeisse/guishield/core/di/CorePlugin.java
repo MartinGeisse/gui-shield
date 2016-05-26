@@ -6,9 +6,9 @@
 
 package name.martingeisse.guishield.core.di;
 
-import name.martingeisse.guiserver.xml.element.RegisteredComponentParser;
-import name.martingeisse.guiserver.xml.value.BuiltinValueParserProvider;
-import name.martingeisse.guiserver.xml.value.RegisteredValueParserProvider;
+import name.martingeisse.guishield.core.xml.element.RegisteredComponentParser;
+import name.martingeisse.guishield.core.xml.value.BuiltinValueParserProvider;
+import name.martingeisse.guishield.core.xml.value.RegisteredValueParserProvider;
 
 /**
  * This is a pseudo-plugin that adds the core extension points and extensions.

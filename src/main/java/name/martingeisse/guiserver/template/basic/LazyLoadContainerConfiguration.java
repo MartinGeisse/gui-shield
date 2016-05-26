@@ -7,8 +7,8 @@
 package name.martingeisse.guiserver.template.basic;
 
 import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.xml.builder.StructuredElement;
-import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.builder.StructuredElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
 import name.martingeisse.wicket.component.misc.LongLoadingContainer;
 
 import org.apache.wicket.MarkupContainer;

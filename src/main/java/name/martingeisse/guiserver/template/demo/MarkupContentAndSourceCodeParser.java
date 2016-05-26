@@ -16,9 +16,9 @@ import javax.xml.stream.XMLStreamWriter;
 
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.MarkupContent;
-import name.martingeisse.guiserver.xml.PrettyPrintXmlStreamWriter;
-import name.martingeisse.guiserver.xml.XmlStreamReaderTee;
-import name.martingeisse.guiserver.xml.content.ContentParser;
+import name.martingeisse.guishield.core.xml.PrettyPrintXmlStreamWriter;
+import name.martingeisse.guishield.core.xml.XmlStreamReaderTee;
+import name.martingeisse.guishield.core.xml.content.ContentParser;
 
 /**
  * A parser for {@link MarkupContentAndSourceCode} that wraps a parser for

@@ -25,7 +25,7 @@ import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.MarkupContent;
 import name.martingeisse.guiserver.template.Template;
-import name.martingeisse.guiserver.xml.content.ContentParser;
+import name.martingeisse.guishield.core.xml.content.ContentParser;
 
 /**
  * Base class for all configuration elements that use a template,

@@ -6,18 +6,18 @@
 
 package name.martingeisse.guiserver.template;
 
-import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.content.ContentParserRegistry;
-import name.martingeisse.guiserver.xml.element.ElementParser;
-import name.martingeisse.guiserver.xml.element.ElementParserRegistry;
-import name.martingeisse.guiserver.xml.element.NameSelectedElementParser;
-import name.martingeisse.guiserver.xml.generated.ElementParserBuilder;
-import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
-import name.martingeisse.guiserver.xml.generated.annotation.BindContent;
-import name.martingeisse.guiserver.xml.generated.annotation.BindNestedElement;
-import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
-import name.martingeisse.guiserver.xml.value.ValueParser;
-import name.martingeisse.guiserver.xml.value.ValueParserRegistry;
+import name.martingeisse.guishield.core.xml.content.ContentParser;
+import name.martingeisse.guishield.core.xml.content.ContentParserRegistry;
+import name.martingeisse.guishield.core.xml.element.ElementParser;
+import name.martingeisse.guishield.core.xml.element.ElementParserRegistry;
+import name.martingeisse.guishield.core.xml.element.NameSelectedElementParser;
+import name.martingeisse.guishield.core.xml.generated.ElementParserBuilder;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindContent;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindNestedElement;
+import name.martingeisse.guishield.core.xml.value.ValueParser;
+import name.martingeisse.guishield.core.xml.value.ValueParserRegistry;
 
 /**
  * This class builds the parser for the XML format.

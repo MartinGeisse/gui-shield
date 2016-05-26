@@ -12,8 +12,8 @@ import java.util.List;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.element.ElementParser;
+import name.martingeisse.guishield.core.xml.content.ContentParser;
+import name.martingeisse.guishield.core.xml.element.ElementParser;
 
 /**
  * Parses XML content to produce mixed raw/component markup.

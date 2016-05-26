@@ -15,9 +15,9 @@ import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
-import name.martingeisse.guiserver.xml.builder.StructuredElement;
-import name.martingeisse.guiserver.xml.generated.annotation.BindAttribute;
-import name.martingeisse.guiserver.xml.generated.annotation.BindElement;
+import name.martingeisse.guishield.core.xml.builder.StructuredElement;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
+import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
 import org.apache.wicket.Component;
 
 /**

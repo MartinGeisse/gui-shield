@@ -29,11 +29,11 @@ import name.martingeisse.guiserver.template.demo.ComponentDemoConfiguration;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCode;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCodeParser;
 import name.martingeisse.guiserver.template.model.BackendJsonModelConfiguration;
-import name.martingeisse.guiserver.xml.content.ContentParser;
-import name.martingeisse.guiserver.xml.oldstuff.DelegatingContentParser;
-import name.martingeisse.guiserver.xml.value.BooleanValueParser;
-import name.martingeisse.guiserver.xml.value.IntegerValueParser;
-import name.martingeisse.guiserver.xml.value.StringValueParser;
+import name.martingeisse.guishield.core.xml.content.ContentParser;
+import name.martingeisse.guishield.core.xml.oldstuff.DelegatingContentParser;
+import name.martingeisse.guishield.core.xml.value.BooleanValueParser;
+import name.martingeisse.guishield.core.xml.value.IntegerValueParser;
+import name.martingeisse.guishield.core.xml.value.StringValueParser;
 
 /**
  * Parses the templates for user-defined pages, panels, and so on.
