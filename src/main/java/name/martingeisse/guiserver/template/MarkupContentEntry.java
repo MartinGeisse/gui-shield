@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamWriter;
  *
  * @param <C> the component type
  */
-public abstract class MarkupContentEntry<C extends ConfigurationAssemblerAcceptor<C>> {
+public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> {
 
 	/**
 	 * Assembles the configuration.
@@ -65,7 +65,7 @@ public abstract class MarkupContentEntry<C extends ConfigurationAssemblerAccepto
 	 *
 	 * @param <C> the component type
 	 */
-	public static final class RawOpeningTag<C extends ConfigurationAssemblerAcceptor<C>> extends MarkupContentEntry<C> {
+	public static final class RawOpeningTag<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
 
 		/**
 		 * the localName
@@ -104,7 +104,7 @@ public abstract class MarkupContentEntry<C extends ConfigurationAssemblerAccepto
 	 *
 	 * @param <C> the component type
 	 */
-	public static final class RawClosingTag<C extends ConfigurationAssemblerAcceptor<C>> extends MarkupContentEntry<C> {
+	public static final class RawClosingTag<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
 
 		/* (non-Javadoc)
 		 * @see name.martingeisse.guiserver.xml.result.MarkupContentEntry#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
@@ -121,7 +121,7 @@ public abstract class MarkupContentEntry<C extends ConfigurationAssemblerAccepto
 	 *
 	 * @param <C> the component type
 	 */
-	public static final class Characters<C extends ConfigurationAssemblerAcceptor<C>> extends MarkupContentEntry<C> {
+	public static final class Characters<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
 
 		/**
 		 * the text
@@ -151,7 +151,7 @@ public abstract class MarkupContentEntry<C extends ConfigurationAssemblerAccepto
 	 *
 	 * @param <C> the component type
 	 */
-	public static final class ComponentGroup<C extends ConfigurationAssemblerAcceptor<C>> extends MarkupContentEntry<C> {
+	public static final class ComponentGroup<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
 
 		/**
 		 * the configuration

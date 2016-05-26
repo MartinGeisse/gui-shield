@@ -15,7 +15,7 @@ import javax.xml.stream.XMLStreamException;
  *
  * @param <C> the type of components used in markup content
  */
-public final class MarkupContent<C extends ConfigurationAssemblerAcceptor<C>> {
+public final class MarkupContent<C extends ComponentGroupConfiguration> {
 
 	/**
 	 * the entries

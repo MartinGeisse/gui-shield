@@ -17,7 +17,7 @@ import javax.xml.stream.XMLStreamWriter;
  *
  * @param <CG> the component group type
  */
-public final class ConfigurationAssembler<CG extends ConfigurationAssemblerAcceptor<CG>> {
+public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration> {
 
 	/**
 	 * the markupWriter

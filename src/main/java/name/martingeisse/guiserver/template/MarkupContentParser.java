@@ -22,7 +22,7 @@ import name.martingeisse.guiserver.xml.element.ElementParser;
  * 
  * @param <C> the type of components used in markup content
  */
-public final class MarkupContentParser<C extends ConfigurationAssemblerAcceptor<C>> implements ContentParser<MarkupContent<C>> {
+public final class MarkupContentParser<C extends ComponentGroupConfiguration> implements ContentParser<MarkupContent<C>> {
 
 	/**
 	 * the specialElementComponentParser
