@@ -11,10 +11,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 /**
  * Used to represent the actual contents of a {@link MarkupContent} object.
- *
- * @param <C> the component type
  */
-public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> {
+public abstract class MarkupContentEntry {
 
 	/**
 	 * Assembles the configuration.
@@ -22,7 +20,7 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	public abstract void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException;
+	public abstract void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException;
 
 	/**
 	 * Represents an attribute for an element.
@@ -62,10 +60,8 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 
 	/**
 	 * Represents an opening tag of a raw (non-special) element.
-	 *
-	 * @param <C> the component type
 	 */
-	public static final class RawOpeningTag<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
+	public static final class RawOpeningTag extends MarkupContentEntry {
 
 		/**
 		 * the localName
@@ -91,7 +87,7 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 		 * @see name.martingeisse.guiserver.xml.result.MarkupContentEntry#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
 		 */
 		@Override
-		public void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException {
+		public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
 			assembler.getMarkupWriter().writeStartElement(localName);
 			for (Attribute attribute : attributes) {
 				attribute.writeTo(assembler.getMarkupWriter());
@@ -101,16 +97,14 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 
 	/**
 	 * Represents a closing tag of a raw (non-special) element.
-	 *
-	 * @param <C> the component type
 	 */
-	public static final class RawClosingTag<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
+	public static final class RawClosingTag extends MarkupContentEntry<ComponentGroupConfiguration> {
 
 		/* (non-Javadoc)
 		 * @see name.martingeisse.guiserver.xml.result.MarkupContentEntry#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
 		 */
 		@Override
-		public void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException {
+		public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
 			assembler.getMarkupWriter().writeEndElement();
 		}
 
@@ -118,10 +112,8 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 
 	/**
 	 * Represents character content.
-	 *
-	 * @param <C> the component type
 	 */
-	public static final class Characters<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
+	public static final class Characters extends MarkupContentEntry<ComponentGroupConfiguration> {
 
 		/**
 		 * the text
@@ -140,7 +132,7 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 		 * @see name.martingeisse.guiserver.xml.result.MarkupContentEntry#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
 		 */
 		@Override
-		public void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException {
+		public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
 			assembler.getMarkupWriter().writeCharacters(text);
 		}
 
@@ -148,10 +140,8 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 
 	/**
 	 * Represents a component group configuration.
-	 *
-	 * @param <C> the component type
 	 */
-	public static final class ComponentGroup<C extends ComponentGroupConfiguration> extends MarkupContentEntry<C> {
+	public static final class ComponentGroup extends MarkupContentEntry<ComponentGroupConfiguration> {
 
 		/**
 		 * the configuration
@@ -170,7 +160,7 @@ public abstract class MarkupContentEntry<C extends ComponentGroupConfiguration> 
 		 * @see name.martingeisse.guiserver.xml.result.MarkupContentEntry#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
 		 */
 		@Override
-		public void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException {
+		public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
 			configuration.assemble(assembler);
 		}
 

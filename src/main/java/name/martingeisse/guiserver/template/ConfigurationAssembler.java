@@ -14,10 +14,8 @@ import javax.xml.stream.XMLStreamWriter;
  * Helper class that takes component-enhanced markup and
  * creates the final component/markup/snippet configuration from
  * that.
- *
- * @param <CG> the component group type
  */
-public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration> {
+public final class ConfigurationAssembler {
 
 	/**
 	 * the markupWriter
@@ -27,7 +25,7 @@ public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration
 	/**
 	 * the componentGroupAccumulator
 	 */
-	private final List<CG> componentGroupAccumulator;
+	private final List<ComponentGroupConfiguration> componentGroupAccumulator;
 
 	/**
 	 * the snippetAccumulator
@@ -40,7 +38,7 @@ public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration
 	 * @param componentGroupAccumulator a list that accumulates the component configurations
 	 * @param snippetAccumulator a list that accumulates globally indexed configuration snippets
 	 */
-	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<CG> componentGroupAccumulator, List<IConfigurationSnippet> snippetAccumulator) {
+	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<ComponentGroupConfiguration> componentGroupAccumulator, List<IConfigurationSnippet> snippetAccumulator) {
 		this.markupWriter = markupWriter;
 		this.componentGroupAccumulator = componentGroupAccumulator;
 		this.snippetAccumulator = snippetAccumulator;
@@ -68,7 +66,7 @@ public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration
 	 * Adds a component to the component group accumulator
 	 * @param component the component to add
 	 */
-	public void addComponentGroup(CG component) {
+	public void addComponentGroup(ComponentGroupConfiguration component) {
 		componentGroupAccumulator.add(component);
 	}
 
@@ -89,7 +87,7 @@ public final class ConfigurationAssembler<CG extends ComponentGroupConfiguration
 	 * @param componentGroupAccumulator the component group accumulator to use
 	 * @return the new assembler
 	 */
-	public ConfigurationAssembler<CG> withComponentGroupAccumulator(List<CG> newComponentGroupAccumulator) {
+	public ConfigurationAssembler<ComponentGroupConfiguration> withComponentGroupAccumulator(List<ComponentGroupConfiguration> newComponentGroupAccumulator) {
 		return new ConfigurationAssembler<>(markupWriter, newComponentGroupAccumulator, snippetAccumulator);
 	}
 	

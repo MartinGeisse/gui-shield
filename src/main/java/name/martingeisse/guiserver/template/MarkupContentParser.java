@@ -19,15 +19,13 @@ import name.martingeisse.guiserver.xml.element.ElementParser;
  * Parses XML content to produce mixed raw/component markup.
  * 
  * This parser delegates to a configurable {@link ElementParser} to handle component elements.
- * 
- * @param <C> the type of components used in markup content
  */
-public final class MarkupContentParser<C extends ComponentGroupConfiguration> implements ContentParser<MarkupContent<C>> {
+public final class MarkupContentParser implements ContentParser<MarkupContent<ComponentGroupConfiguration>> {
 
 	/**
 	 * the specialElementComponentParser
 	 */
-	private ElementParser<C> specialElementComponentParser;
+	private ElementParser<ComponentGroupConfiguration> specialElementComponentParser;
 
 	/**
 	 * Constructor.
@@ -39,7 +37,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 	 * Constructor.
 	 * @param specialElementComponentParser the special-element-to-component-configuration-parser
 	 */
-	public MarkupContentParser(ElementParser<C> specialElementComponentParser) {
+	public MarkupContentParser(ElementParser<ComponentGroupConfiguration> specialElementComponentParser) {
 		this.specialElementComponentParser = specialElementComponentParser;
 	}
 
@@ -47,7 +45,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 	 * Getter method for the specialElementComponentParser.
 	 * @return the specialElementComponentParser
 	 */
-	public ElementParser<C> getSpecialElementComponentParser() {
+	public ElementParser<ComponentGroupConfiguration> getSpecialElementComponentParser() {
 		return specialElementComponentParser;
 	}
 
@@ -55,16 +53,16 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 	 * Setter method for the specialElementComponentParser.
 	 * @param specialElementComponentParser the specialElementComponentParser to set
 	 */
-	public void setSpecialElementComponentParser(ElementParser<C> specialElementComponentParser) {
+	public void setSpecialElementComponentParser(ElementParser<ComponentGroupConfiguration> specialElementComponentParser) {
 		this.specialElementComponentParser = specialElementComponentParser;
 	}
 
 	@Override
-	public MarkupContent<C> parse(XMLStreamReader reader) throws XMLStreamException {
+	public MarkupContent parse(XMLStreamReader reader) throws XMLStreamException {
 		if (specialElementComponentParser == null) {
 			throw new IllegalStateException("component element parser not set");
 		}
-		List<MarkupContentEntry<C>> entries = new ArrayList<MarkupContentEntry<C>>();
+		List<MarkupContentEntry> entries = new ArrayList<MarkupContentEntry>();
 		int nesting = 0;
 		loop: while (true) {
 			switch (reader.getEventType()) {
@@ -72,7 +70,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 			case XMLStreamConstants.START_ELEMENT:
 				if (reader.getNamespaceURI() != null) {
 					C component = specialElementComponentParser.parse(reader);
-					entries.add(new MarkupContentEntry.ComponentGroup<C>(component));
+					entries.add(new MarkupContentEntry.ComponentGroup(component));
 				} else {
 					MarkupContentEntry.Attribute[] attributes = new MarkupContentEntry.Attribute[reader.getAttributeCount()];
 					for (int i = 0; i < attributes.length; i++) {
@@ -80,7 +78,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 						String attributeValue = reader.getAttributeValue(i);
 						attributes[i] = new MarkupContentEntry.Attribute(attributeLocalName, attributeValue);
 					}
-					entries.add(new MarkupContentEntry.RawOpeningTag<C>(reader.getLocalName(), attributes));
+					entries.add(new MarkupContentEntry.RawOpeningTag(reader.getLocalName(), attributes));
 					reader.next();
 					nesting++;
 				}
@@ -88,7 +86,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 
 			case XMLStreamConstants.END_ELEMENT:
 				if (nesting > 0) {
-					entries.add(new MarkupContentEntry.RawClosingTag<C>());
+					entries.add(new MarkupContentEntry.RawClosingTag());
 					reader.next();
 					nesting--;
 					break;
@@ -100,7 +98,7 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 			case XMLStreamConstants.CHARACTERS:
 			case XMLStreamConstants.SPACE:
 			case XMLStreamConstants.ENTITY_REFERENCE:
-				entries.add(new MarkupContentEntry.Characters<C>(reader.getText()));
+				entries.add(new MarkupContentEntry.Characters(reader.getText()));
 				reader.next();
 				break;
 
@@ -113,15 +111,15 @@ public final class MarkupContentParser<C extends ComponentGroupConfiguration> im
 
 			}
 		}
-		return new MarkupContent<C>(listToArray(entries));
+		return new MarkupContent(listToArray(entries));
 	}
 
 	/**
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	private MarkupContentEntry<C>[] listToArray(List<MarkupContentEntry<C>> entries) {
-		return entries.toArray((MarkupContentEntry<C>[])(new MarkupContentEntry<?>[entries.size()]));
+	private MarkupContentEntry[] listToArray(List<MarkupContentEntry> entries) {
+		return entries.toArray((MarkupContentEntry[])(new MarkupContentEntry<?>[entries.size()]));
 	}
 
 }

@@ -12,21 +12,19 @@ import javax.xml.stream.XMLStreamException;
 
 /**
  * A piece of properly nested markup that may contain components of type C.
- *
- * @param <C> the type of components used in markup content
  */
-public final class MarkupContent<C extends ComponentGroupConfiguration> {
+public final class MarkupContent {
 
 	/**
 	 * the entries
 	 */
-	private final MarkupContentEntry<C>[] entries;
+	private final MarkupContentEntry<ComponentGroupConfiguration>[] entries;
 
 	/**
 	 * Constructor.
 	 * @param entries the entries
 	 */
-	public MarkupContent(MarkupContentEntry<C>[] entries) {
+	public MarkupContent(MarkupContentEntry<ComponentGroupConfiguration>[] entries) {
 		this.entries = entries;
 	}
 
@@ -35,10 +33,10 @@ public final class MarkupContent<C extends ComponentGroupConfiguration> {
 	 * @param components the components
 	 */
 	@SuppressWarnings("unchecked")
-	public MarkupContent(List<C> components) {
+	public MarkupContent(List<ComponentGroupConfiguration> components) {
 		this.entries = createArray(components.size());
 		for (int i=0; i<components.size(); i++) {
-			entries[i] = new MarkupContentEntry.ComponentGroup<C>(components.get(i));
+			entries[i] = new MarkupContentEntry.ComponentGroup<ComponentGroupConfiguration>(components.get(i));
 		}
 	}
 
@@ -46,8 +44,8 @@ public final class MarkupContent<C extends ComponentGroupConfiguration> {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	private MarkupContentEntry<C>[] createArray(int size) {
-		return (MarkupContentEntry<C>[])(new MarkupContentEntry<?>[size]);
+	private MarkupContentEntry<ComponentGroupConfiguration>[] createArray(int size) {
+		return (MarkupContentEntry<ComponentGroupConfiguration>[])(new MarkupContentEntry<?>[size]);
 	}
 	
 	/**
@@ -56,8 +54,8 @@ public final class MarkupContent<C extends ComponentGroupConfiguration> {
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	public void assemble(ConfigurationAssembler<C> assembler) throws XMLStreamException {
-		for (MarkupContentEntry<C> entry : entries) {
+	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+		for (MarkupContentEntry<ComponentGroupConfiguration> entry : entries) {
 			entry.assemble(assembler);
 		}
 	}
