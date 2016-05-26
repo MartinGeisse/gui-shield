@@ -59,14 +59,4 @@ public abstract class AbstractComponentGroupConfiguration implements ComponentGr
 		return baseId;
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.ComponentConfiguration#accept(name.martingeisse.guiserver.configuration.content.IComponentConfigurationVisitor)
-	 */
-	@Override
-	public void accept(IComponentGroupConfigurationVisitor visitor) {
-		if (visitor.beginVisit(this)) {
-			visitor.endVisit(this);
-		}
-	}
-	
 }

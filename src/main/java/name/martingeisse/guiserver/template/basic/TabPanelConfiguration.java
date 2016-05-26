@@ -17,7 +17,6 @@ import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration
 import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
 import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.template.IComponentGroupConfigurationVisitor;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.UrlSubpathComponentGroupConfiguration;
 import name.martingeisse.guiserver.xml.builder.AttributeValueBindingOptionality;
@@ -141,19 +140,6 @@ public final class TabPanelConfiguration extends AbstractSingleComponentConfigur
 		}
 		tabPanelContainer.add(tabPanel);
 		return tabPanelContainer;
-	}
-
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#accept(name.martingeisse.guiserver.configuration.content.IComponentConfigurationVisitor)
-	 */
-	@Override
-	public void accept(IComponentGroupConfigurationVisitor visitor) {
-		if (visitor.beginVisit(this)) {
-			for (TabEntry tab : tabs) {
-				tab.accept(visitor);
-			}
-			visitor.endVisit(this);
-		}
 	}
 
 	/* (non-Javadoc)

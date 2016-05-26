@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableList;
  * Contains the configuration for multiple component groups, usually for the
  * children of a {@link MarkupContainer}.
  */
-public final class ComponentGroupConfigurationList implements IComponentGroupConfigurationVisitorAcceptor {
+public final class ComponentGroupConfigurationList {
 
 	/**
 	 * the configurations
@@ -49,14 +49,4 @@ public final class ComponentGroupConfigurationList implements IComponentGroupCon
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.IComponentConfigurationVisitorAcceptor#accept(name.martingeisse.guiserver.configuration.content.IComponentConfigurationVisitor)
-	 */
-	@Override
-	public void accept(IComponentGroupConfigurationVisitor visitor) {
-		for (ComponentGroupConfiguration configuration : configurations) {
-			configuration.accept(visitor);
-		}
-	}
-	
 }

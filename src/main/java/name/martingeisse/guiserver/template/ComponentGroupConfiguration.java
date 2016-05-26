@@ -23,7 +23,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
  * This interface knows how to build the Wicket components and how to
  * generate the corresponding markup in the enclosing page or panel.
  */
-public interface ComponentGroupConfiguration extends ConfigurationAssemblerAcceptor<ComponentGroupConfiguration>, IComponentGroupConfigurationVisitorAcceptor {
+public interface ComponentGroupConfiguration extends ConfigurationAssemblerAcceptor<ComponentGroupConfiguration> {
 	
 	/**
 	 * Builds the wicket components for this group and gives them to the specified consumer.

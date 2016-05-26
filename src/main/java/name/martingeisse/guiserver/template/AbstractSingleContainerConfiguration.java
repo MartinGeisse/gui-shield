@@ -132,15 +132,4 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 */
 	protected abstract MarkupContainer buildContainer();
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.ComponentConfiguration#accept(name.martingeisse.guiserver.configuration.content.IComponentConfigurationVisitor)
-	 */
-	@Override
-	public void accept(IComponentGroupConfigurationVisitor visitor) {
-		if (visitor.beginVisit(this)) {
-			children.accept(visitor);
-			visitor.endVisit(this);
-		}
-	}
-
 }

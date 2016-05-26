@@ -15,7 +15,7 @@ import name.martingeisse.guiserver.xml.value.ValueParser;
  * The default implementation of {@link AttributeParser}. This class
  * reads a single attribute with a fixed name and uses a
  * {@link ValueParser} to parse its value.
- * 
+ *
  * Note that the default value is specified in the same format as in the
  * XML, that is, the default value gets parsed just as any other value.
  * This is because of the strongly restricted types that can be used in
@@ -36,49 +36,62 @@ public final class SimpleAttributeParser<T> implements AttributeParser<T> {
 	private final boolean optional;
 
 	/**
-	 * the defaultValue
-	 */
-	private final String defaultValue;
-
-	/**
 	 * the valueParser
 	 */
 	private final ValueParser<T> valueParser;
 
 	/**
-	 * the parsedDefaultValue
+	 * the defaultValue
 	 */
-	private final T parsedDefaultValue;
+	private final T defaultValue;
 
 	/**
 	 * Constructor for a mandatory attribute.
-	 * 
+	 *
 	 * @param name the attribute name
 	 * @param valueParser the parser for the attribute value
 	 */
-	public SimpleAttributeParser(String name, ValueParser<T> valueParser) {
-		this(name, false, valueParser);
+	public SimpleAttributeParser(final String name, final ValueParser<T> valueParser) {
+		this(name, false, valueParser, null);
 	}
 
 	/**
 	 * Constructor
-	 * .
+	 *
 	 * @param name the attribute name
 	 * @param optional whether the attribute is optional
 	 * @param valueParser the parser for the attribute value
 	 */
-	public SimpleAttributeParser(String name, boolean optional, ValueParser<T> valueParser) {
-		this(name, optional, null, valueParser);
+	public SimpleAttributeParser(final String name, final boolean optional, final ValueParser<T> valueParser) {
+		this(name, optional, valueParser, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param name the attribute name
+	 * @param defaultValue the default value (unparsed)
+	 * @param valueParser the parser for the attribute value
+	 */
+	public SimpleAttributeParser(final String name, final String defaultValue, final ValueParser<T> valueParser) {
+		this(name, true, valueParser, defaultValue == null ? null : valueParser.parse(defaultValue));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param name the attribute name
+	 * @param valueParser the parser for the attribute value
+	 * @param defaultValue the default value (parsed)
+	 */
+	public SimpleAttributeParser(final String name, final ValueParser<T> valueParser, final T defaultValue) {
+		this(name, true, valueParser, defaultValue);
 	}
 
 	/**
 	 * Constructor.
-	 * @param name the attribute name
-	 * @param optional whether the attribute is optional
-	 * @param defaultValue the default value to use if the attribute is optional and absent
-	 * @param valueParser the parser for the attribute value
 	 */
-	public SimpleAttributeParser(String name, boolean optional, String defaultValue, ValueParser<T> valueParser) {
+	private SimpleAttributeParser(final String name, final boolean optional, final ValueParser<T> valueParser, final T defaultValue) {
 		if (name == null) {
 			throw new IllegalArgumentException("name argument is null");
 		}
@@ -87,13 +100,8 @@ public final class SimpleAttributeParser<T> implements AttributeParser<T> {
 		}
 		this.name = name;
 		this.optional = optional;
-		this.defaultValue = defaultValue;
-		try {
-			this.parsedDefaultValue = (defaultValue == null ? null : valueParser.parse(defaultValue));
-		} catch (Exception e) {
-			throw new RuntimeException("failed to parse default value for attribute " + name, e);
-		}
 		this.valueParser = valueParser;
+		this.defaultValue = defaultValue;
 	}
 
 	/**
@@ -113,14 +121,6 @@ public final class SimpleAttributeParser<T> implements AttributeParser<T> {
 	}
 
 	/**
-	 * Getter method for the defaultValue.
-	 * @return the defaultValue
-	 */
-	public String getDefaultValue() {
-		return defaultValue;
-	}
-
-	/**
 	 * Getter method for the valueParser.
 	 * @return the valueParser
 	 */
@@ -129,20 +129,20 @@ public final class SimpleAttributeParser<T> implements AttributeParser<T> {
 	}
 
 	/**
-	 * Getter method for the parsedDefaultValue.
-	 * @return the parsedDefaultValue
+	 * Getter method for the defaultValue.
+	 * @return the defaultValue
 	 */
-	public T getParsedDefaultValue() {
-		return parsedDefaultValue;
+	public T getDefaultValue() {
+		return defaultValue;
 	}
 
 	// override
 	@Override
-	public T parse(XMLStreamReader reader) throws XMLStreamException {
-		String specifiedValue = reader.getAttributeValue(null, name);
+	public T parse(final XMLStreamReader reader) throws XMLStreamException {
+		final String specifiedValue = reader.getAttributeValue(null, name);
 		if (specifiedValue == null) {
 			if (optional) {
-				return parsedDefaultValue;
+				return defaultValue;
 			} else {
 				throw new MissingAttributeException(name);
 			}

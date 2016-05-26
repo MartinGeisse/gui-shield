@@ -8,6 +8,7 @@ package name.martingeisse.guiserver.template;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import org.apache.wicket.validation.IValidator;
 import name.martingeisse.guiserver.template.basic.EchoTextConfiguration;
 import name.martingeisse.guiserver.template.basic.EnclosureConfiguration;
 import name.martingeisse.guiserver.template.basic.IfConfiguration;
@@ -24,8 +25,6 @@ import name.martingeisse.guiserver.template.basic.form.FormConfiguration;
 import name.martingeisse.guiserver.template.basic.form.SubmitButtonConfiguration;
 import name.martingeisse.guiserver.template.basic.form.TextFieldConfiguration;
 import name.martingeisse.guiserver.template.basic.form.ValidatorParser;
-import name.martingeisse.guiserver.template.bootstrap.form.BootstrapFormConfiguration;
-import name.martingeisse.guiserver.template.bootstrap.form.BootstrapTextFieldConfiguration;
 import name.martingeisse.guiserver.template.demo.ComponentDemoConfiguration;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCode;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCodeParser;
@@ -35,8 +34,6 @@ import name.martingeisse.guiserver.xml.content.DelegatingContentParser;
 import name.martingeisse.guiserver.xml.value.BooleanValueParser;
 import name.martingeisse.guiserver.xml.value.IntegerValueParser;
 import name.martingeisse.guiserver.xml.value.StringValueParser;
-
-import org.apache.wicket.validation.IValidator;
 
 /**
  * Parses the templates for user-defined pages, panels, and so on.
@@ -102,10 +99,6 @@ public final class TemplateParser implements ContentParser<MarkupContent<Compone
 			builder.autoAddComponentElementParser(ListViewConfiguration.class);
 			builder.autoAddComponentElementParser(IfConfiguration.class);
 
-			// Bootstrap-specific tags
-			builder.autoAddComponentElementParser(BootstrapFormConfiguration.class);
-			builder.autoAddComponentElementParser(BootstrapTextFieldConfiguration.class);
-			
 			// models
 			builder.autoAddComponentElementParser(BackendJsonModelConfiguration.class);
 
