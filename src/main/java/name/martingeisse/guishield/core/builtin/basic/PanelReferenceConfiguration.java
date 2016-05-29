@@ -4,14 +4,13 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template.basic;
+package name.martingeisse.guishield.core.builtin.basic;
 
 import javax.xml.stream.XMLStreamException;
-
-import name.martingeisse.guiserver.component.UserDefinedPanel;
 import name.martingeisse.guiserver.configuration.ConfigurationHolder;
 import name.martingeisse.guiserver.configuration.element.xml.PanelConfiguration;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
+import name.martingeisse.guishield.core.definition.DefinitionPath;
 import name.martingeisse.guishield.core.definition.template.AbstractSingleComponentConfiguration;
 import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
 import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
@@ -23,14 +22,10 @@ import org.apache.wicket.Component;
 /**
  * Configuration for using a gui:panel defined elsewhere.
  */
-@StructuredElement
 @BindElement(localName = "panel")
-public class PanelReferenceConfiguration extends AbstractSingleComponentConfiguration implements IConfigurationSnippet {
+public class PanelReferenceConfiguration extends AbstractSingleComponentConfiguration {
 
-	/**
-	 * the sourcePath
-	 */
-	private String sourcePath;
+	private DefinitionPath sourcePath;
 	
 	/**
 	 * the panelConfiguration
@@ -48,24 +43,9 @@ public class PanelReferenceConfiguration extends AbstractSingleComponentConfigur
 	 */
 	@BindAttribute(name = "src")
 	public void setSourcePath(String sourcePath) {
-		this.sourcePath = sourcePath;
+		this.sourcePath = new DefinitionPath(sourcePath);
 	}
 	
-	/**
-	 * Getter method for the snippetHandle.
-	 * @return the snippetHandle
-	 */
-	public int getSnippetHandle() {
-		return snippetHandle;
-	}
-	
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.template.IConfigurationSnippet#setSnippetHandle(int)
-	 */
-	@Override
-	public void setSnippetHandle(int snippetHandle) {
-		this.snippetHandle = snippetHandle;
-	}
 
 	/**
 	 * @return the panel configuration
@@ -95,7 +75,7 @@ public class PanelReferenceConfiguration extends AbstractSingleComponentConfigur
 	 */
 	@Override
 	public Component buildComponent() {
-		UserDefinedPanel panel = new UserDefinedPanel(getComponentId(), this);
+		ConfigurationDefinedPanel panel = new ConfigurationDefinedPanel(getComponentId(), this);
 		// TODO add children from the panel configuration
 		return panel;
 	}

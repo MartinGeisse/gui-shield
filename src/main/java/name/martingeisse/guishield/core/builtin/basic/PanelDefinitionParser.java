@@ -10,8 +10,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import name.martingeisse.guishield.core.definition.TemplateBasedDefinitionParser;
 import name.martingeisse.guishield.core.definition.template.Template;
+import name.martingeisse.guishield.core.definition.template.TemplateBasedDefinitionParser;
 import name.martingeisse.guishield.core.xml.content.MarkupContentParser;
 
 /**

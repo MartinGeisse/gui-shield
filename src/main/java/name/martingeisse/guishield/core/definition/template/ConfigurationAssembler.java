@@ -27,13 +27,20 @@ public final class ConfigurationAssembler {
 	private final List<ComponentConfiguration> componentGroupAccumulator;
 
 	/**
+	 * the snippetAccumulator
+	 */
+	private final List<Snippet> snippetAccumulator;
+
+	/**
 	 * Constructor.
 	 * @param markupWriter the object used to write Wicket markup
 	 * @param componentGroupAccumulator a list that accumulates the component configurations
+	 * @param snippetAccumulator the snippet accumulator
 	 */
-	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<ComponentConfiguration> componentGroupAccumulator) {
+	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<ComponentConfiguration> componentGroupAccumulator, List<Snippet> snippetAccumulator) {
 		this.markupWriter = markupWriter;
 		this.componentGroupAccumulator = componentGroupAccumulator;
+		this.snippetAccumulator = snippetAccumulator;
 	}
 
 	/**
@@ -55,13 +62,32 @@ public final class ConfigurationAssembler {
 	}
 	
 	/**
-	 * Adds a component to the component group accumulator
+	 * TODO remove the term "component *group*"
+	 * Adds a component to the component group accumulator. If the component configuration is
+	 * a snippet (i.e. implements {@link Snippet}), it will also be added as a snippet and have
+	 * its snippet handle set.
+	 * 
 	 * @param component the component to add
 	 */
 	public void addComponentGroup(ComponentConfiguration component) {
 		componentGroupAccumulator.add(component);
+		if (component instanceof Snippet) {
+			Snippet snippet = (Snippet)component;
+			snippet.setSnippetHandle(addSnippet(snippet));
+		}
 	}
 	
+	/**
+	 * Adds a snippet and returns its handle.
+	 * @param snippet the snippet to add
+	 * @return the handle
+	 */
+	public int addSnippet(Snippet snippet) {
+		int handle = snippetAccumulator.size();
+		snippetAccumulator.add(snippet);
+		return handle;
+	}
+
 	/**
 	 * Creates an assembler like this one but with a different component group accumulator.
 	 * 
@@ -69,7 +95,7 @@ public final class ConfigurationAssembler {
 	 * @return the new assembler
 	 */
 	public ConfigurationAssembler withComponentGroupAccumulator(List<ComponentConfiguration> componentGroupAccumulator) {
-		return new ConfigurationAssembler(markupWriter, componentGroupAccumulator);
+		return new ConfigurationAssembler(markupWriter, componentGroupAccumulator, snippetAccumulator);
 	}
 	
 }

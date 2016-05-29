@@ -1,0 +1,30 @@
+
+Basic:
+--------
+
+panel, border (selbe syntax; Vorhandensein eines <gui:body> tags in der Definition entscheidet)
+	-> vor allem mit abweichenden Caching-Zeiten
+		-> interessant sind vor allem Panels, die *kürzer* gecached werden als die Seite
+			(andersrum ist wenig gewonnen; ein lange cachebares Panel kurz zu cachen ist kein großer Verlust,
+			weil das Laden der Seite sowieso lange dauert)
+	-> getrennt von HTML-include, da bei Panels der Sourcecode nicht aus einem Model kommen kann!
+
+HTML include, text include (selbe syntax; Attribut "escape" (default true) entscheidet)
+
+lazy-loading
+
+tab panel
+
+------------------------------------------------------------------------
+
+Models:
+----------------
+
+HTML-Include, Text-Include aus Models
+
+Repeater
+
+Enclosure
+
+AttributeModifier
+

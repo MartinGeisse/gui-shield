@@ -2,7 +2,10 @@
 Parameterized model URLs (using old syntax here):
 	<gui:model id="customerData" src="/api/customer/${customerId}/data" type="json">
 
-HTML include (currently: only text)
+Include:
+	text (escape)
+	HTML (don't escape)
+	template (parse) -> panel, border mit derselben syntax
 
 Panels with models (using old syntax here):
 	<gui:panel src="/gui/customer-name-panel.xml" model="customerData" />

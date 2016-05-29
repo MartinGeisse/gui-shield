@@ -10,8 +10,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import name.martingeisse.guishield.core.definition.TemplateBasedDefinitionParser;
 import name.martingeisse.guishield.core.definition.template.Template;
+import name.martingeisse.guishield.core.definition.template.TemplateBasedDefinitionParser;
 import name.martingeisse.guishield.core.xml.content.MarkupContentParser;
 
 /**
@@ -34,8 +34,6 @@ public class PageDefinitionParser extends TemplateBasedDefinitionParser {
 	 */
 	@Override
 	protected void writeWicketMarkupIntro(XMLStreamWriter markupWriter) throws XMLStreamException {
-//		markupWriter.writeStartElement("html");
-//		markupWriter.writeStartElement("body");
 	}
 
 	/* (non-Javadoc)
@@ -43,8 +41,6 @@ public class PageDefinitionParser extends TemplateBasedDefinitionParser {
 	 */
 	@Override
 	protected void writeWicketMarkupOutro(XMLStreamWriter markupWriter) throws XMLStreamException {
-//		markupWriter.writeEndElement();
-//		markupWriter.writeEndElement();
 	}
 
 	// override

@@ -29,10 +29,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import name.martingeisse.guishield.core.builtin.basic.ConfigurationDefinedPage;
 import name.martingeisse.guishield.core.definition.DefinitionPath;
 
 /**
- * This mapper extracts the path, puts it into a parameter and passes that to a {@link ShieldPage}.
+ * This mapper extracts the path, puts it into a parameter and passes that to a {@link ConfigurationDefinedPage}.
  */
 public final class MyRequestMapper extends AbstractComponentMapper {
 
@@ -58,24 +59,24 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 		if (pageParameters == null) {
 			pageParameters = new PageParameters();
 		}
-		if (pageParameters.get(ShieldPage.PAGE_DEFINITION_PATH_PARAMETER_NAME).isNull()) {
-			pageParameters.add(ShieldPage.PAGE_DEFINITION_PATH_PARAMETER_NAME, path);
+		if (pageParameters.get(ConfigurationDefinedPage.PAGE_DEFINITION_PATH_PARAMETER_NAME).isNull()) {
+			pageParameters.add(ConfigurationDefinedPage.PAGE_DEFINITION_PATH_PARAMETER_NAME, path);
 		}
 		if (pageComponentInfo == null) {
 
 			// bookmarkable case -- creates new page instance
-			final PageProvider provider = new PageProvider(ShieldPage.class, pageParameters);
+			final PageProvider provider = new PageProvider(ConfigurationDefinedPage.class, pageParameters);
 			provider.setPageSource(getContext());
 			return new RenderPageRequestHandler(provider);
 
 		} else if (pageComponentInfo.getPageInfo().getPageId() != null && pageComponentInfo.getComponentInfo() == null) {
 			
 			// hybrid instance/bookmarkable case -- tries to use instance, but creates new instance if that failed
-			final PageProvider provider = new PageProvider(pageComponentInfo.getPageInfo().getPageId(), ShieldPage.class, pageParameters, null);
+			final PageProvider provider = new PageProvider(pageComponentInfo.getPageInfo().getPageId(), ConfigurationDefinedPage.class, pageParameters, null);
 			provider.setPageSource(getContext());
 			final PageParameters constructionPageParameters = provider.hasPageInstance() ? provider.getPageInstance().getPageParameters() : new PageParameters();
 			if (PageParameters.equals(constructionPageParameters, pageParameters) == false) {
-				return new RenderPageRequestHandler(new PageProvider(ShieldPage.class, pageParameters));
+				return new RenderPageRequestHandler(new PageProvider(ConfigurationDefinedPage.class, pageParameters));
 			}
 			return new RenderPageRequestHandler(provider);
 
@@ -93,14 +94,14 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 				logger.warn("Unknown listener interface '{}'", componentInfo.getListenerInterface());
 				return null;
 			}
-			final PageAndComponentProvider provider = new PageAndComponentProvider(pageInfo.getPageId(), ShieldPage.class, pageParameters, componentInfo.getRenderCount(), componentInfo.getComponentPath());
+			final PageAndComponentProvider provider = new PageAndComponentProvider(pageInfo.getPageId(), ConfigurationDefinedPage.class, pageParameters, componentInfo.getRenderCount(), componentInfo.getComponentPath());
 			provider.setPageSource(getContext());
 			return new ListenerInterfaceRequestHandler(provider, listenerInterface, componentInfo.getBehaviorId());
 			
 		} else if (pageComponentInfo.getPageInfo().getPageId() == null) {
 			
 			// bookmarkable case -- creates new page instance
-			final PageProvider provider = new PageProvider(ShieldPage.class, pageParameters);
+			final PageProvider provider = new PageProvider(ConfigurationDefinedPage.class, pageParameters);
 			provider.setPageSource(getContext());
 			return new RenderPageRequestHandler(provider);
 			
@@ -119,7 +120,7 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 
 			// bookmarkable rendering case
 			final BookmarkablePageRequestHandler handler = (BookmarkablePageRequestHandler)requestHandler;
-			if (!handler.getPageClass().equals(ShieldPage.class)) {
+			if (!handler.getPageClass().equals(ConfigurationDefinedPage.class)) {
 				return null;
 			}
 			return buildUrl(new PageComponentInfo(new PageInfo(), null), handler.getPageParameters());
@@ -128,14 +129,14 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 
 			// non-bookmarkable rendering case
 			final RenderPageRequestHandler handler = (RenderPageRequestHandler)requestHandler;
-			if (!handler.getPageClass().equals(ShieldPage.class)) {
+			if (!handler.getPageClass().equals(ConfigurationDefinedPage.class)) {
 				return null;
 			}
 			if (handler.getPageProvider().isNewPageInstance()) {
 				return buildUrl(new PageComponentInfo(new PageInfo(), null), handler.getPageParameters());
 			}
 			final IRequestablePage page = handler.getPage();
-			if (page instanceof ShieldPage) {
+			if (page instanceof ConfigurationDefinedPage) {
 				final PageInfo info = getPageInfo(handler);
 				final PageComponentInfo pageComponentInfo = new PageComponentInfo(info, null);
 				return buildUrl(pageComponentInfo, handler.getPageParameters());
@@ -147,7 +148,7 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 
 			// bookmarkable listener case
 			final BookmarkableListenerInterfaceRequestHandler handler = (BookmarkableListenerInterfaceRequestHandler)requestHandler;
-			if (!handler.getPageClass().equals(ShieldPage.class)) {
+			if (!handler.getPageClass().equals(ConfigurationDefinedPage.class)) {
 				return null;
 			}
 			final RequestListenerInterface listenerInterface = handler.getListenerInterface();
@@ -165,7 +166,7 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 			// non-bookmarkable listener case
 			final ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler)requestHandler;
 			final IRequestablePage page = handler.getPage();
-			if (!handler.getPageClass().equals(ShieldPage.class)) {
+			if (!handler.getPageClass().equals(ConfigurationDefinedPage.class)) {
 				return null;
 			}
 			final RequestListenerInterface listenerInterface = handler.getListenerInterface();
@@ -195,7 +196,7 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 	}
 
 	private Url buildUrl(final PageComponentInfo pageComponentInfo, final PageParameters pageParameters) {
-		final String definitionPathText = pageParameters.get(ShieldPage.PAGE_DEFINITION_PATH_PARAMETER_NAME).toString();
+		final String definitionPathText = pageParameters.get(ConfigurationDefinedPage.PAGE_DEFINITION_PATH_PARAMETER_NAME).toString();
 		if (definitionPathText == null) {
 			throw new IllegalArgumentException("cannot generate URL -- no page definition path parameter");
 		}
@@ -205,7 +206,7 @@ public final class MyRequestMapper extends AbstractComponentMapper {
 			url.getSegments().add(s);
 		}
 		encodePageComponentInfo(url, pageComponentInfo);
-		return encodePageParameters(url, new PageParameters(pageParameters).remove(ShieldPage.PAGE_DEFINITION_PATH_PARAMETER_NAME, (String[])null), pageParametersEncoder);
+		return encodePageParameters(url, new PageParameters(pageParameters).remove(ConfigurationDefinedPage.PAGE_DEFINITION_PATH_PARAMETER_NAME, (String[])null), pageParametersEncoder);
 	}
 
 	// override

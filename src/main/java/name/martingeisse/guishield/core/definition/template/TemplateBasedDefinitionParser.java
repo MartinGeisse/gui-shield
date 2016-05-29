@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guishield.core.definition;
+package name.martingeisse.guishield.core.definition.template;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -14,11 +14,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import com.google.common.collect.ImmutableList;
-import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
-import name.martingeisse.guishield.core.definition.template.ComponentConfigurationList;
-import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
-import name.martingeisse.guishield.core.definition.template.MarkupContent;
-import name.martingeisse.guishield.core.definition.template.Template;
+import name.martingeisse.guishield.core.definition.ResourceDefinition;
 import name.martingeisse.guishield.core.xml.content.ContentParser;
 
 /**
@@ -55,13 +51,14 @@ public abstract class TemplateBasedDefinitionParser {
 		// assemble the final component configuration tree from the markup content
 		String wicketMarkup;
 		ComponentConfigurationList components;
+		List<Snippet> snippetAccumulator = new ArrayList<>();
 		try {
 			StringWriter stringWriter = new StringWriter();
 			XMLStreamWriter markupWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(stringWriter);
 			markupWriter.writeStartDocument();
 			writeWicketMarkupIntro(markupWriter);
 			List<ComponentConfiguration> componentGroupAccumulator = new ArrayList<>();
-			ConfigurationAssembler assembler = new ConfigurationAssembler(markupWriter, componentGroupAccumulator);
+			ConfigurationAssembler assembler = new ConfigurationAssembler(markupWriter, componentGroupAccumulator, snippetAccumulator);
 			markupContent.assemble(assembler);
 			writeWicketMarkupOutro(markupWriter);
 			markupWriter.writeEndDocument();
@@ -79,7 +76,8 @@ public abstract class TemplateBasedDefinitionParser {
 		System.out.println("------------------------------------------");
 		// TODO
 
-		return createResourceDefinition(new Template(wicketMarkup, components));
+		ImmutableList<Snippet> snippets = ImmutableList.copyOf(snippetAccumulator);
+		return createResourceDefinition(new Template(wicketMarkup, components, snippets));
 	}
 
 	/**

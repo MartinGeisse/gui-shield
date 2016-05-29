@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guishield.core.wicket;
+package name.martingeisse.guishield.core.builtin.basic;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.IMarkupCacheKeyProvider;
@@ -14,10 +14,12 @@ import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
-import name.martingeisse.guishield.core.builtin.basic.PageDefinition;
 import name.martingeisse.guishield.core.definition.DefinitionPath;
 import name.martingeisse.guishield.core.definition.DefinitionRepository;
 import name.martingeisse.guishield.core.definition.ResourceDefinitionEntry;
+import name.martingeisse.guishield.core.definition.template.Snippet;
+import name.martingeisse.guishield.core.definition.template.SnippetHolder;
+import name.martingeisse.guishield.core.wicket.MyWicketApplication;
 
 /**
  * <p>
@@ -27,7 +29,7 @@ import name.martingeisse.guishield.core.definition.ResourceDefinitionEntry;
  * Note: This class must be final because the request mapper currently can't handle subclasses.
  * </p>
  */
-public final class ShieldPage extends WebPage implements IMarkupCacheKeyProvider, IMarkupResourceStreamProvider {
+public final class ConfigurationDefinedPage extends WebPage implements IMarkupCacheKeyProvider, IMarkupResourceStreamProvider, SnippetHolder {
 
 	/**
 	 *
@@ -43,7 +45,7 @@ public final class ShieldPage extends WebPage implements IMarkupCacheKeyProvider
 	 * 
 	 * @param parameters the page parameters
 	 */
-	public ShieldPage(final PageParameters parameters) {
+	public ConfigurationDefinedPage(final PageParameters parameters) {
 		super(parameters);
 
 		// extract the definition path
@@ -83,7 +85,7 @@ public final class ShieldPage extends WebPage implements IMarkupCacheKeyProvider
 	@Override
 	public String getCacheKey(MarkupContainer container, Class<?> containerClass) {
 		if (container != this) {
-			throw new IllegalArgumentException("a ShieldPage cannot be used to provide a markup cache key for other components than itself");
+			throw new IllegalArgumentException("a ConfigurationDefinedPage cannot be used to provide a markup cache key for other components than itself");
 		}
 		loadDefinition();
 		return "definition:" + definitionPath + ':' + cachedResourceDefinitionEntry.getSerialNumber();
@@ -93,10 +95,17 @@ public final class ShieldPage extends WebPage implements IMarkupCacheKeyProvider
 	@Override
 	public IResourceStream getMarkupResourceStream(MarkupContainer container, Class<?> containerClass) {
 		if (container != this) {
-			throw new IllegalArgumentException("a ShieldPage cannot be used to provide a markup resource stream for other components than itself");
+			throw new IllegalArgumentException("a ConfigurationDefinedPage cannot be used to provide a markup resource stream for other components than itself");
 		}
 		loadDefinition();
 		return new StringResourceStream(cachedPageDefinition.getTemplate().getWicketMarkup());
 	}
 
+	// override
+	@Override
+	public Snippet getSnippet(int snippetHandle) {
+		loadDefinition();
+		return cachedPageDefinition.getTemplate().getSnippets().get(snippetHandle);
+	}
+	
 }

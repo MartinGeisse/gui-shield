@@ -4,11 +4,11 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.component;
+package name.martingeisse.guishield.core.builtin.basic;
 
 import name.martingeisse.guiserver.configuration.ConfigurationHolder;
-import name.martingeisse.guiserver.template.basic.PanelReferenceConfiguration;
-
+import name.martingeisse.guishield.core.definition.template.Snippet;
+import name.martingeisse.guishield.core.definition.template.SnippetHolder;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.IMarkupCacheKeyProvider;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
@@ -16,13 +16,15 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 
+
+TODO a panel is a snippet holder, and its configuration is a snippet. Should
+the search for a snippet holder start at its parent? How exactly does the whole thing work?
+	
 /**
  * This component gets used for a gui:panel reference to a
  * gui:panel definition in a panel template.
- * 
- * TODO rename to ConfigurationDefinedPanel
  */
-public class UserDefinedPanel extends Panel implements IMarkupCacheKeyProvider, IMarkupResourceStreamProvider {
+public class ConfigurationDefinedPanel extends Panel implements IMarkupCacheKeyProvider, IMarkupResourceStreamProvider, SnippetHolder {
 
 	/**
 	 * the panelReferenceConfigurationHandle
@@ -39,7 +41,7 @@ public class UserDefinedPanel extends Panel implements IMarkupCacheKeyProvider, 
 	 * @param id the wicket id
 	 * @param panelReferenceConfiguration the panel reference configuration
 	 */
-	public UserDefinedPanel(String id, PanelReferenceConfiguration panelReferenceConfiguration) {
+	public ConfigurationDefinedPanel(String id, PanelReferenceConfiguration panelReferenceConfiguration) {
 		super(id);
 		this.panelReferenceConfigurationHandle = panelReferenceConfiguration.getSnippetHandle();
 		this.cachedPanelReferenceConfiguration = panelReferenceConfiguration;
@@ -76,6 +78,14 @@ public class UserDefinedPanel extends Panel implements IMarkupCacheKeyProvider, 
 			throw new IllegalArgumentException("a UserDefinedPanel cannot be used to provide a markup resource stream for other components than itself");
 		}
 		return new StringResourceStream(getPanelReferenceConfiguration().getPanelConfiguration().getTemplate().getWicketMarkup());
+	}
+
+	
+	// override
+	@Override
+	public Snippet getSnippet(int snippetHandle) {
+		loadDefinition();
+		return cacheddef.getTemplate().getSnippets().get(snippetHandle);
 	}
 
 }

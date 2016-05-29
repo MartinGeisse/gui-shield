@@ -15,6 +15,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
+import name.martingeisse.guishield.core.builtin.basic.ConfigurationDefinedPage;
 
 /**
  * The Wicket {@link WebApplication} implementation.
@@ -90,7 +91,7 @@ public class MyWicketApplication extends WebApplication {
 	 */
 	@Override
 	public Class<? extends Page> getHomePage() {
-		return ShieldPage.class;
+		return ConfigurationDefinedPage.class;
 	}
 
 }
