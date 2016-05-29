@@ -6,6 +6,7 @@
 
 package name.martingeisse.guishield.core.definition;
 
+import javax.xml.stream.XMLStreamException;
 import com.google.inject.Inject;
 import name.martingeisse.guishield.core.backend.BackendRequester;
 
@@ -17,14 +18,17 @@ import name.martingeisse.guishield.core.backend.BackendRequester;
 public class DefinitionLoader {
 
 	private final BackendRequester requester;
+	private final XmlParserSwitch xmlParserSwitch;
 
 	/**
 	 * Constructor.
 	 * @param requester (injected)
+	 * @param xmlParserSwitch (injected)
 	 */
 	@Inject
-	public DefinitionLoader(final BackendRequester requester) {
+	public DefinitionLoader(final BackendRequester requester, XmlParserSwitch xmlParserSwitch) {
 		this.requester = requester;
+		this.xmlParserSwitch = xmlParserSwitch;
 	}
 
 	/**
@@ -33,8 +37,12 @@ public class DefinitionLoader {
 	 * @param path the path
 	 * @return the definition
 	 */
-	public String loadDefinition(final DefinitionPath path) {
-		return requester.requestDefinition(path);
+	public ResourceDefinition loadDefinition(final DefinitionPath path) {
+		try {
+			return xmlParserSwitch.parse(requester.requestDefinition(path));
+		} catch (XMLStreamException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

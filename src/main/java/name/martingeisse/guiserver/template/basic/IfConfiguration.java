@@ -9,12 +9,12 @@ package name.martingeisse.guiserver.template.basic;
 import javax.xml.stream.XMLStreamException;
 
 import name.martingeisse.common.terms.IConsumer;
-import name.martingeisse.guiserver.template.AbstractComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
-import name.martingeisse.guiserver.template.MarkupContent;
 import name.martingeisse.guiserver.template.model.NamedModelReferenceBehavior;
+import name.martingeisse.guishield.core.definition.template.AbstractComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleContainerConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindContent;
@@ -30,7 +30,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
  */
 @StructuredElement
 @BindElement(localName = "if")
-public class IfConfiguration extends AbstractComponentGroupConfiguration {
+public class IfConfiguration extends AbstractComponentConfiguration {
 
 	/**
 	 * the thenBranch
@@ -47,7 +47,7 @@ public class IfConfiguration extends AbstractComponentGroupConfiguration {
 	 * @param markupContent the markupContent to set
 	 */
 	@BindContent
-	public void setMarkupContent(MarkupContent<ComponentGroupConfiguration> markupContent) {
+	public void setMarkupContent(MarkupContent<ComponentConfiguration> markupContent) {
 		thenBranch.setMarkupContent(markupContent);
 	}
 
@@ -72,7 +72,7 @@ public class IfConfiguration extends AbstractComponentGroupConfiguration {
 	 * @see name.martingeisse.guiserver.template.AbstractComponentGroupConfiguration#assemble(name.martingeisse.guiserver.template.ConfigurationAssembler)
 	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		thenBranch.assemble(assembler);
 	}

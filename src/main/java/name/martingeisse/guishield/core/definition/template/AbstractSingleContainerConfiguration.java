@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +24,25 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	/**
 	 * the markupContent
 	 */
-	private MarkupContent<ComponentGroupConfiguration> markupContent;
+	private MarkupContent markupContent;
 
 	/**
 	 * the children
 	 */
-	private ComponentGroupConfigurationList children;
+	private ComponentConfigurationList children;
 
 	/**
 	 * Setter method for the markupContent.
 	 * @param markupContent the markupContent to set
 	 */
 	@BindContent
-	public void setMarkupContent(MarkupContent<ComponentGroupConfiguration> markupContent) {
+	public void setMarkupContent(MarkupContent markupContent) {
 		this.markupContent = markupContent;
 	}
 	
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#assemble(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
-	 */
+	// override
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		assembleContainerIntro(assembler);
 		assembleContainerContents(assembler);
@@ -58,7 +56,7 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	protected void assembleContainerIntro(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	protected void assembleContainerIntro(ConfigurationAssembler assembler) throws XMLStreamException {
 		writeOpeningComponentTag(assembler, "div");
 	}
 
@@ -74,7 +72,7 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 * @param localName the local element name
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	protected final void writeOpeningComponentTag(ConfigurationAssembler<ComponentGroupConfiguration> assembler, String localName) throws XMLStreamException {
+	protected final void writeOpeningComponentTag(ConfigurationAssembler assembler, String localName) throws XMLStreamException {
 		assembler.getMarkupWriter().writeStartElement(localName);
 		assembler.getMarkupWriter().writeAttribute("wicket:id", getComponentId());
 	}
@@ -87,11 +85,11 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	protected void assembleContainerContents(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
-		List<ComponentGroupConfiguration> childrenAccumulator = new ArrayList<ComponentGroupConfiguration>();
-		ConfigurationAssembler<ComponentGroupConfiguration> subAssembler = assembler.withComponentGroupAccumulator(childrenAccumulator);
+	protected void assembleContainerContents(ConfigurationAssembler assembler) throws XMLStreamException {
+		List<ComponentConfiguration> childrenAccumulator = new ArrayList<ComponentConfiguration>();
+		ConfigurationAssembler subAssembler = assembler.withComponentGroupAccumulator(childrenAccumulator);
 		markupContent.assemble(subAssembler);
-		this.children = new ComponentGroupConfigurationList(ImmutableList.copyOf(childrenAccumulator));
+		this.children = new ComponentConfigurationList(ImmutableList.copyOf(childrenAccumulator));
 	}
 	
 	/**
@@ -102,7 +100,7 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 * @param assembler the configuration assembler
 	 * @throws XMLStreamException on XML stream processing errors
 	 */
-	protected void assembleContainerOutro(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	protected void assembleContainerOutro(ConfigurationAssembler assembler) throws XMLStreamException {
 		assembler.getMarkupWriter().writeEndElement();
 	}
 	
@@ -110,13 +108,11 @@ public abstract class AbstractSingleContainerConfiguration extends AbstractSingl
 	 * Getter method for the children.
 	 * @return the children
 	 */
-	protected final ComponentGroupConfigurationList getChildren() {
+	protected final ComponentConfigurationList getChildren() {
 		return children;
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configurationNew.content.ComponentConfiguration#buildComponent()
-	 */
+	// override
 	@Override
 	public Component buildComponent() {
 		MarkupContainer container = buildContainer();

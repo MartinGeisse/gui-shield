@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -146,13 +146,13 @@ public abstract class MarkupContentEntry {
 		/**
 		 * the configuration
 		 */
-		private final ComponentGroupConfiguration configuration;
+		private final ComponentConfiguration configuration;
 
 		/**
 		 * Constructor.
 		 * @param configuration the component group configuration
 		 */
-		public ComponentGroup(ComponentGroupConfiguration configuration) {
+		public ComponentGroup(ComponentConfiguration configuration) {
 			this.configuration = configuration;
 		}
 

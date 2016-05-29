@@ -8,8 +8,8 @@ package name.martingeisse.guiserver.template.basic.form;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.RecursiveContentParserBuilder;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
 import name.martingeisse.guishield.core.xml.attribute.SimpleAttributeParser;
 import name.martingeisse.guishield.core.xml.element.AbstractEmptyElementParser;
 import name.martingeisse.guishield.core.xml.element.AttributeSelectedElementParser;
@@ -27,7 +27,7 @@ public final class ValidatorParser extends AttributeSelectedElementParser<IValid
 	/**
 	 * Constructor.
 	 */
-	public ValidatorParser(RecursiveContentParserBuilder<ComponentGroupConfiguration> builder) {
+	public ValidatorParser(RecursiveContentParserBuilder<ComponentConfiguration> builder) {
 		setAttributeName("type");
 		addParser("length", new AbstractEmptyElementParser<IValidator<?>>() {
 			private final SimpleAttributeParser<Integer> minParser = new SimpleAttributeParser<Integer>("min", true, IntegerValueParser.INSTANCE);

@@ -16,6 +16,7 @@ import com.google.inject.Inject;
 public class DefinitionRepository {
 
 	private final DefinitionLoader loader;
+	private int serialNumber = 0;
 
 	/**
 	 * Constructor.
@@ -30,8 +31,9 @@ public class DefinitionRepository {
 	 * @param path the path
 	 * @return the definition object
 	 */
-	public String getDefinition(final DefinitionPath path) {
-		return loader.loadDefinition(path);
+	public ResourceDefinitionEntry getDefinition(final DefinitionPath path) {
+		serialNumber++;
+		return new ResourceDefinitionEntry(path, serialNumber, loader.loadDefinition(path));
 	}
 
 }

@@ -4,9 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
-
-
+package name.martingeisse.guishield.core.definition.template;
 
 /**
  * Common base class for the content specifications for configuration elements
@@ -25,14 +23,14 @@ public final class Template {
 	/**
 	 * the components
 	 */
-	private final ComponentGroupConfigurationList components;
+	private final ComponentConfigurationList components;
 
 	/**
 	 * Constructor.
 	 * @param wicketMarkup the wicket markup
 	 * @param components the components to attach to that markup
 	 */
-	public Template(String wicketMarkup, ComponentGroupConfigurationList components) {
+	public Template(String wicketMarkup, ComponentConfigurationList components) {
 		this.wicketMarkup = wicketMarkup;
 		this.components = components;
 	}
@@ -49,7 +47,7 @@ public final class Template {
 	 * Getter method for the components.
 	 * @return the components
 	 */
-	public ComponentGroupConfigurationList getComponents() {
+	public ComponentConfigurationList getComponents() {
 		return components;
 	}
 

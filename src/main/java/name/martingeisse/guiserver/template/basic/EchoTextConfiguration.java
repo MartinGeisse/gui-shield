@@ -7,11 +7,10 @@
 package name.martingeisse.guiserver.template.basic;
 
 import javax.xml.stream.XMLStreamException;
-
-import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.model.NamedModelReferenceBehavior;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
@@ -44,7 +43,7 @@ public final class EchoTextConfiguration extends AbstractSingleComponentConfigur
 	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#assemble(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
 	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		assembler.getMarkupWriter().writeEmptyElement("wicket:container");
 		assembler.getMarkupWriter().writeAttribute("wicket:id", getComponentId());

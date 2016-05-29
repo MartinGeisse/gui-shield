@@ -4,17 +4,16 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
-import name.martingeisse.common.terms.IConsumer;
-
+import java.util.function.Consumer;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 
 /**
  * Consumes components by adding them to a markup container.
  */
-public final class MarkupContainerChildrenConsumer implements IConsumer<Component> {
+public final class MarkupContainerChildrenConsumer implements Consumer<Component> {
 
 	/**
 	 * the container
@@ -29,11 +28,9 @@ public final class MarkupContainerChildrenConsumer implements IConsumer<Componen
 		this.container = container;
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.common.terms.IConsumer#consume(java.lang.Object)
-	 */
+	// override
 	@Override
-	public void consume(Component component) {
+	public void accept(Component component) {
 		container.add(component);
 	}
 

@@ -11,9 +11,9 @@ import javax.xml.stream.XMLStreamException;
 import name.martingeisse.guiserver.component.DisappearingFeedbackPanel;
 import name.martingeisse.guiserver.component.FieldPathBehavior;
 import name.martingeisse.guiserver.component.FieldPathFeedbackMessageFilter;
-import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
@@ -44,7 +44,7 @@ public final class FieldPathFeedbackPanelConfiguration extends AbstractSingleCom
 	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#assemble(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
 	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		assembler.getMarkupWriter().writeEmptyElement("div");
 		assembler.getMarkupWriter().writeAttribute("wicket:id", getComponentId());

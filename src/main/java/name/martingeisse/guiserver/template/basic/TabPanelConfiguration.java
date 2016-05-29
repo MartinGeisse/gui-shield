@@ -13,12 +13,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import name.martingeisse.guiserver.configuration.ConfigurationHolder;
-import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
-import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
-import name.martingeisse.guiserver.template.UrlSubpathComponentGroupConfiguration;
+import name.martingeisse.guiserver.template.other.UrlSubpathComponentGroupConfiguration;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleContainerConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.AttributeValueBindingOptionality;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
@@ -90,7 +90,7 @@ public final class TabPanelConfiguration extends AbstractSingleComponentConfigur
 	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#assemble(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
 	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		XMLStreamWriter writer = assembler.getMarkupWriter();
 		String id = getComponentId();
@@ -222,7 +222,7 @@ public final class TabPanelConfiguration extends AbstractSingleComponentConfigur
 		 * @see name.martingeisse.guiserver.configuration.content.AbstractContainerConfiguration#assembleContainerIntro(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
 		 */
 		@Override
-		protected void assembleContainerIntro(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+		protected void assembleContainerIntro(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 			writeOpeningComponentTag(assembler, "wicket:fragment");
 		}
 		

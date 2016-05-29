@@ -15,7 +15,7 @@ import java.util.Set;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import name.martingeisse.guiserver.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 import name.martingeisse.guishield.core.xml.attribute.AttributeParser;
 import name.martingeisse.guishield.core.xml.attribute.SimpleAttributeParser;
 import name.martingeisse.guishield.core.xml.content.ContentParser;

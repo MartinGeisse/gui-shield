@@ -6,7 +6,7 @@
 
 package name.martingeisse.guishield.core.xml.content;
 
-import name.martingeisse.guiserver.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 
 /**
  * Parses XML content to produce mixed raw/component markup. This interface is used

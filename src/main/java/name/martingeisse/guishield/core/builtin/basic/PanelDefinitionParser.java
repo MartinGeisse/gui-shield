@@ -4,27 +4,28 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.configuration.element.xml;
+package name.martingeisse.guishield.core.builtin.basic;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import name.martingeisse.guiserver.configuration.element.Element;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.MarkupContent;
-import name.martingeisse.guiserver.template.Template;
-import name.martingeisse.guishield.core.xml.content.ContentParser;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import name.martingeisse.guishield.core.definition.TemplateBasedDefinitionParser;
+import name.martingeisse.guishield.core.definition.template.Template;
+import name.martingeisse.guishield.core.xml.content.MarkupContentParser;
 
 /**
- * Parses a page template.
+ * Parses a panel template.
  */
-public class PageParser extends TemplateBasedElementParser {
+@Singleton
+public class PanelDefinitionParser extends TemplateBasedDefinitionParser {
 
 	/**
 	 * Constructor.
 	 * @param templateParser the template parser
 	 */
-	public PageParser(ContentParser<MarkupContent<ComponentGroupConfiguration>> templateParser) {
+	@Inject
+	public PanelDefinitionParser(MarkupContentParser templateParser) {
 		super(templateParser);
 	}
 
@@ -35,6 +36,7 @@ public class PageParser extends TemplateBasedElementParser {
 	protected void writeWicketMarkupIntro(XMLStreamWriter markupWriter) throws XMLStreamException {
 		markupWriter.writeStartElement("html");
 		markupWriter.writeStartElement("body");
+		markupWriter.writeStartElement("wicket:panel");
 	}
 
 	/* (non-Javadoc)
@@ -44,14 +46,13 @@ public class PageParser extends TemplateBasedElementParser {
 	protected void writeWicketMarkupOutro(XMLStreamWriter markupWriter) throws XMLStreamException {
 		markupWriter.writeEndElement();
 		markupWriter.writeEndElement();
+		markupWriter.writeEndElement();
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.element.xml.TemplateBasedElementParser#createConfigurationElement(java.lang.String, name.martingeisse.guiserver.template.Template)
-	 */
+	// override
 	@Override
-	protected Element createConfigurationElement(String path, Template template) {
-		return new PageConfiguration(path, template);
+	protected PanelDefinition createResourceDefinition(Template template) {
+		return new PanelDefinition(template);
 	}
 
 }

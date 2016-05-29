@@ -4,16 +4,15 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
-import name.martingeisse.common.terms.IConsumer;
-
+import java.util.function.Consumer;
 import org.apache.wicket.Component;
 
 /**
  * Base class for component configurations that corresponding to a single Wicket component, or no component at all.
  */
-public abstract class AbstractSingleComponentConfiguration extends AbstractComponentGroupConfiguration {
+public abstract class AbstractSingleComponentConfiguration extends AbstractComponentConfiguration {
 
 	/**
 	 * Constructor.
@@ -29,14 +28,12 @@ public abstract class AbstractSingleComponentConfiguration extends AbstractCompo
 		return getComponentBaseId();
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.ComponentGroupConfiguration#buildComponents(name.martingeisse.common.terms.IConsumer)
-	 */
+	// override
 	@Override
-	public void buildComponents(IConsumer<Component> consumer) {
+	public void buildComponents(Consumer<Component> consumer) {
 		Component component = buildComponent();
 		if (component != null) {
-			consumer.consume(component);
+			consumer.accept(component);
 		}
 	}
 

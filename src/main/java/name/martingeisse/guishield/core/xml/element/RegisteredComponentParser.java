@@ -7,15 +7,15 @@
 package name.martingeisse.guishield.core.xml.element;
 
 import javax.xml.stream.XMLStreamReader;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
 
 /**
- * This is an extension point to register parsers that turn XML elements into {@link ComponentGroupConfiguration}s.
+ * This is an extension point to register parsers that turn XML elements into {@link ComponentConfiguration}s.
  * Once registered, such an XML element will be recognized when found in unrelated XML
  * that doesn't use specific element parsers. This is the standard procedure to use plugin-defined
  * components.
  */
-public interface RegisteredComponentParser extends ElementParser<ComponentGroupConfiguration> {
+public interface RegisteredComponentParser extends ElementParser<ComponentConfiguration> {
 
 	/**
 	 * Given an XML stream reader positioned at a starting tag, this method determines

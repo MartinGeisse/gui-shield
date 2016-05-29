@@ -13,9 +13,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 import name.martingeisse.guishield.core.xml.PrettyPrintXmlStreamWriter;
 import name.martingeisse.guishield.core.xml.XmlStreamReaderTee;
 import name.martingeisse.guishield.core.xml.content.ContentParser;
@@ -29,13 +28,13 @@ public class MarkupContentAndSourceCodeParser implements ContentParser<MarkupCon
 	/**
 	 * the wrappedParser
 	 */
-	private final ContentParser<MarkupContent<ComponentGroupConfiguration>> wrappedParser;
+	private final ContentParser<MarkupContent<ComponentConfiguration>> wrappedParser;
 
 	/**
 	 * Constructor.
 	 * @param wrappedParser the wrapped content parser
 	 */
-	public MarkupContentAndSourceCodeParser(ContentParser<MarkupContent<ComponentGroupConfiguration>> wrappedParser) {
+	public MarkupContentAndSourceCodeParser(ContentParser<MarkupContent<ComponentConfiguration>> wrappedParser) {
 		this.wrappedParser = wrappedParser;
 	}
 
@@ -43,7 +42,7 @@ public class MarkupContentAndSourceCodeParser implements ContentParser<MarkupCon
 	public MarkupContentAndSourceCode parse(XMLStreamReader reader) throws XMLStreamException {
 		StringWriter stringWriter = new StringWriter();
 		XMLStreamWriter writer = buildXmlStreamWriter(stringWriter);
-		MarkupContent<ComponentGroupConfiguration> markupContent = wrappedParser.parse(new XmlStreamReaderTee(reader, writer, true));
+		MarkupContent<ComponentConfiguration> markupContent = wrappedParser.parse(new XmlStreamReaderTee(reader, writer, true));
 		String result = stringWriter.toString().replace(" xmlns:gui=\"http://guiserver.martingeisse.name/v1\"", "").trim();
 		
 		// TODO handle empty elements in the PrettyPrintXmlStreamWriter

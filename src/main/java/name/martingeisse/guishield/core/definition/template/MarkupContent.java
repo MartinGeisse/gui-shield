@@ -4,14 +4,14 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
 /**
- * A piece of properly nested markup that may contain components of type C.
+ * A piece of properly nested markup with component configurations.
  */
 public final class MarkupContent {
 
@@ -33,7 +33,7 @@ public final class MarkupContent {
 	 * @param components the components
 	 */
 	@SuppressWarnings("unchecked")
-	public MarkupContent(List<ComponentGroupConfiguration> components) {
+	public MarkupContent(List<ComponentConfiguration> components) {
 		this.entries = new MarkupContentEntry[components.size()];
 		for (int i=0; i<components.size(); i++) {
 			entries[i] = new MarkupContentEntry.ComponentGroup(components.get(i));

@@ -14,9 +14,9 @@ import javax.xml.stream.XMLStreamReader;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.MarkupContent;
-import name.martingeisse.guiserver.template.MarkupContentEntry;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.MarkupContentEntry;
 import name.martingeisse.guishield.core.xml.ParseException;
 import name.martingeisse.guishield.core.xml.element.ComponentParserRegistry;
 import name.martingeisse.guishield.core.xml.element.ElementParser;
@@ -54,7 +54,7 @@ public final class DefaultMarkupContentParser implements MarkupContentParser {
 						if (componentParser == null) {
 							throw new ParseException("unknown component: " + reader.getNamespaceURI() + ':' + reader.getLocalName());
 						}
-						final ComponentGroupConfiguration configuration = componentParser.parse(reader);
+						final ComponentConfiguration configuration = componentParser.parse(reader);
 						entries.add(new MarkupContentEntry.ComponentGroup(configuration));
 					} else {
 						final MarkupContentEntry.Attribute[] attributes = new MarkupContentEntry.Attribute[reader.getAttributeCount()];

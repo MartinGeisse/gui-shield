@@ -10,11 +10,11 @@ import javax.xml.stream.XMLStreamException;
 
 import name.martingeisse.guiserver.component.model.ModelProvider;
 import name.martingeisse.guiserver.configuration.ConfigurationHolder;
-import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
 import name.martingeisse.guiserver.template.model.NamedModelReferenceBehavior;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleContainerConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
@@ -110,7 +110,7 @@ public class ListViewConfiguration extends AbstractSingleContainerConfiguration 
 	 * @see name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration#assembleContainerIntro(name.martingeisse.guiserver.template.ConfigurationAssembler)
 	 */
 	@Override
-	protected void assembleContainerIntro(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	protected void assembleContainerIntro(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		writeOpeningComponentTag(assembler, "wicket:container");
 	}
 

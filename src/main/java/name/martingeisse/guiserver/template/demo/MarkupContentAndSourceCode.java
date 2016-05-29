@@ -6,8 +6,8 @@
 
 package name.martingeisse.guiserver.template.demo;
 
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 
 
 /**
@@ -18,7 +18,7 @@ public final class MarkupContentAndSourceCode {
 	/**
 	 * the markupContent
 	 */
-	private final MarkupContent<ComponentGroupConfiguration> markupContent;
+	private final MarkupContent<ComponentConfiguration> markupContent;
 
 	/**
 	 * the sourceCode
@@ -30,7 +30,7 @@ public final class MarkupContentAndSourceCode {
 	 * @param markupContent the parsed markup content
 	 * @param sourceCode the source code
 	 */
-	public MarkupContentAndSourceCode(MarkupContent<ComponentGroupConfiguration> markupContent, String sourceCode) {
+	public MarkupContentAndSourceCode(MarkupContent<ComponentConfiguration> markupContent, String sourceCode) {
 		this.markupContent = markupContent;
 		this.sourceCode = sourceCode;
 	}
@@ -39,7 +39,7 @@ public final class MarkupContentAndSourceCode {
 	 * Getter method for the markupContent.
 	 * @return the markupContent
 	 */
-	public MarkupContent<ComponentGroupConfiguration> getMarkupContent() {
+	public MarkupContent<ComponentConfiguration> getMarkupContent() {
 		return markupContent;
 	}
 

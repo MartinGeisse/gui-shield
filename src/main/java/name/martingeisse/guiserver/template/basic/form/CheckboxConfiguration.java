@@ -12,9 +12,9 @@ import java.util.List;
 import javax.xml.stream.XMLStreamException;
 
 import name.martingeisse.guiserver.component.FieldPathBehavior;
-import name.martingeisse.guiserver.template.AbstractSingleComponentConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
-import name.martingeisse.guiserver.template.ConfigurationAssembler;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.ConfigurationAssembler;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.AttributeValueBindingOptionality;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindAttribute;
@@ -93,7 +93,7 @@ public final class CheckboxConfiguration extends AbstractSingleComponentConfigur
 	 * @see name.martingeisse.guiserver.configuration.content.AbstractComponentConfiguration#assemble(name.martingeisse.guiserver.xml.result.ConfigurationAssembler)
 	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler<ComponentConfiguration> assembler) throws XMLStreamException {
 		super.assemble(assembler);
 		assembler.getMarkupWriter().writeEmptyElement("input");
 		assembler.getMarkupWriter().writeAttribute("type", "checkbox");

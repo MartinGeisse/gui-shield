@@ -4,14 +4,14 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import javax.xml.stream.XMLStreamException;
 
 /**
  * Base class for component group configurations.
  */
-public abstract class AbstractComponentGroupConfiguration implements ComponentGroupConfiguration {
+public abstract class AbstractComponentConfiguration implements ComponentConfiguration {
 
 	/**
 	 * the baseId
@@ -21,19 +21,12 @@ public abstract class AbstractComponentGroupConfiguration implements ComponentGr
 	/**
 	 * Constructor.
 	 */
-	public AbstractComponentGroupConfiguration() {
+	public AbstractComponentConfiguration() {
 	}
 
-	/* (non-Javadoc)
-	 * @see name.martingeisse.guiserver.configuration.content.ComponentConfiguration#assemble(name.martingeisse.guiserver.xmlbind.result.ConfigurationAssembler)
-	 */
 	@Override
-	public void assemble(ConfigurationAssembler<ComponentGroupConfiguration> assembler) throws XMLStreamException {
+	public void assemble(ConfigurationAssembler assembler) throws XMLStreamException {
 		this.baseId = getBaseIdPrefix() + assembler.getComponentGroupAccumulatorSize();
-		if (this instanceof IConfigurationSnippet) {
-			IConfigurationSnippet snippet = (IConfigurationSnippet)this;
-			snippet.setSnippetHandle(assembler.addSnippet(snippet));
-		}
 		assembler.addComponentGroup(this);
 	}
 	

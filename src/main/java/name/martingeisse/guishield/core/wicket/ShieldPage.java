@@ -6,12 +6,18 @@
 
 package name.martingeisse.guishield.core.wicket;
 
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.markup.IMarkupCacheKeyProvider;
+import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.util.resource.StringResourceStream;
+import name.martingeisse.guishield.core.builtin.basic.PageDefinition;
 import name.martingeisse.guishield.core.definition.DefinitionPath;
 import name.martingeisse.guishield.core.definition.DefinitionRepository;
+import name.martingeisse.guishield.core.definition.ResourceDefinitionEntry;
 
 /**
  * <p>
@@ -21,12 +27,16 @@ import name.martingeisse.guishield.core.definition.DefinitionRepository;
  * Note: This class must be final because the request mapper currently can't handle subclasses.
  * </p>
  */
-public final class ShieldPage extends WebPage {
+public final class ShieldPage extends WebPage implements IMarkupCacheKeyProvider, IMarkupResourceStreamProvider {
 
 	/**
 	 *
 	 */
 	public static final String PAGE_DEFINITION_PATH_PARAMETER_NAME = "__gui_server__page_definition_path__";
+	
+	private final DefinitionPath definitionPath;
+	private transient ResourceDefinitionEntry cachedResourceDefinitionEntry = null;
+	private transient PageDefinition cachedPageDefinition = null;
 	
 	/**
 	 * Constructor.
@@ -41,16 +51,52 @@ public final class ShieldPage extends WebPage {
 		if (definitionPathText == null) {
 			throw new IllegalArgumentException("definition path parameter is missing");
 		}
-		DefinitionPath definitionPath = new DefinitionPath(definitionPathText);
+		definitionPath = new DefinitionPath(definitionPathText);
 		
 		// load the definition for this page
-		String definition = MyWicketApplication.get().getDependency(DefinitionRepository.class).getDefinition(definitionPath);
-		if (definition == null) {
-			throw new AbortWithHttpErrorCodeException(404);
-		}
-		
-		// TODO
-		add(new Label("definition", definition));
+		loadDefinition();
 		
 	}
+
+	private void loadDefinition() {
+		if (cachedResourceDefinitionEntry == null) {
+			cachedResourceDefinitionEntry = MyWicketApplication.get().getDependency(DefinitionRepository.class).getDefinition(definitionPath);
+			cachedPageDefinition = null;
+		}
+		if (cachedPageDefinition == null) {
+			if (!(cachedResourceDefinitionEntry.getDefinition() instanceof PageDefinition)) {
+				throw new AbortWithHttpErrorCodeException(404);
+			}
+			cachedPageDefinition = (PageDefinition)cachedResourceDefinitionEntry.getDefinition();
+		}
+	}
+
+	// override
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+		loadDefinition();
+		cachedPageDefinition.getTemplate().getComponents().buildAndAddComponents(this);
+	}
+
+	// override
+	@Override
+	public String getCacheKey(MarkupContainer container, Class<?> containerClass) {
+		if (container != this) {
+			throw new IllegalArgumentException("a ShieldPage cannot be used to provide a markup cache key for other components than itself");
+		}
+		loadDefinition();
+		return "definition:" + definitionPath + ':' + cachedResourceDefinitionEntry.getSerialNumber();
+	}
+
+	// override
+	@Override
+	public IResourceStream getMarkupResourceStream(MarkupContainer container, Class<?> containerClass) {
+		if (container != this) {
+			throw new IllegalArgumentException("a ShieldPage cannot be used to provide a markup resource stream for other components than itself");
+		}
+		loadDefinition();
+		return new StringResourceStream(cachedPageDefinition.getTemplate().getWicketMarkup());
+	}
+
 }

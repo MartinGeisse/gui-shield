@@ -6,7 +6,7 @@
 
 package name.martingeisse.guiserver.template.basic;
 
-import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleContainerConfiguration;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
 import name.martingeisse.wicket.component.misc.LongLoadingContainer;

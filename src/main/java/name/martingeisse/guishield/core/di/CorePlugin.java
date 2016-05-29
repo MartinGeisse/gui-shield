@@ -6,6 +6,8 @@
 
 package name.martingeisse.guishield.core.di;
 
+import name.martingeisse.guishield.core.xml.content.DefaultMarkupContentParser;
+import name.martingeisse.guishield.core.xml.content.MarkupContentParser;
 import name.martingeisse.guishield.core.xml.element.RegisteredComponentParser;
 import name.martingeisse.guishield.core.xml.value.BuiltinValueParserProvider;
 import name.martingeisse.guishield.core.xml.value.RegisteredValueParserProvider;
@@ -18,6 +20,8 @@ public final class CorePlugin extends Plugin {
 	// override
 	@Override
 	protected void configure() {
+		
+		bind(MarkupContentParser.class).to(DefaultMarkupContentParser.class);
 		
 		defineExtensionPoint(ApplicationStartupListener.class);
 		

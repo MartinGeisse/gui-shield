@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import org.apache.wicket.MarkupContainer;
 
@@ -14,18 +14,18 @@ import com.google.common.collect.ImmutableList;
  * Contains the configuration for multiple component groups, usually for the
  * children of a {@link MarkupContainer}.
  */
-public final class ComponentGroupConfigurationList {
+public final class ComponentConfigurationList {
 
 	/**
 	 * the configurations
 	 */
-	private final ImmutableList<ComponentGroupConfiguration> configurations;
+	private final ImmutableList<ComponentConfiguration> configurations;
 
 	/**
 	 * Constructor.
 	 * @param configurations the wrapped configurations
 	 */
-	public ComponentGroupConfigurationList(ImmutableList<ComponentGroupConfiguration> configurations) {
+	public ComponentConfigurationList(ImmutableList<ComponentConfiguration> configurations) {
 		this.configurations = configurations;
 	}
 	
@@ -33,7 +33,7 @@ public final class ComponentGroupConfigurationList {
 	 * Getter method for the configurations.
 	 * @return the configurations
 	 */
-	public ImmutableList<ComponentGroupConfiguration> getConfigurations() {
+	public ImmutableList<ComponentConfiguration> getConfigurations() {
 		return configurations;
 	}
 
@@ -44,7 +44,7 @@ public final class ComponentGroupConfigurationList {
 	 * @param parent the parent container to add the components to
 	 */
 	public void buildAndAddComponents(MarkupContainer parent) {
-		for (ComponentGroupConfiguration configuration : configurations) {
+		for (ComponentConfiguration configuration : configurations) {
 			configuration.buildComponents(new MarkupContainerChildrenConsumer(parent));
 		}
 	}

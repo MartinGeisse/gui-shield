@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guiserver.template.other;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -29,6 +29,8 @@ import name.martingeisse.guiserver.template.demo.ComponentDemoConfiguration;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCode;
 import name.martingeisse.guiserver.template.demo.MarkupContentAndSourceCodeParser;
 import name.martingeisse.guiserver.template.model.BackendJsonModelConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 import name.martingeisse.guishield.core.xml.content.ContentParser;
 import name.martingeisse.guishield.core.xml.oldstuff.DelegatingContentParser;
 import name.martingeisse.guishield.core.xml.value.BooleanValueParser;
@@ -38,7 +40,7 @@ import name.martingeisse.guishield.core.xml.value.StringValueParser;
 /**
  * Parses the templates for user-defined pages, panels, and so on.
  */
-public final class TemplateParser implements ContentParser<MarkupContent<ComponentGroupConfiguration>> {
+public final class TemplateParser implements ContentParser<MarkupContent<ComponentConfiguration>> {
 
 	/**
 	 * the INSTANCE
@@ -48,30 +50,13 @@ public final class TemplateParser implements ContentParser<MarkupContent<Compone
 	/**
 	 * the parser
 	 */
-	private final ContentParser<MarkupContent<ComponentGroupConfiguration>> parser;
+	private final ContentParser<MarkupContent<ComponentConfiguration>> parser;
 
 	/**
 	 * Constructor.
 	 */
 	public TemplateParser() {
 		try {
-			RecursiveContentParserBuilder<ComponentGroupConfiguration> builder = new RecursiveContentParserBuilder<>();
-			
-			// this parser will be used to close the recursive loop
-			DelegatingContentParser<MarkupContent<ComponentGroupConfiguration>> recursiveMarkupParser = new DelegatingContentParser<>();
-			
-			// register the builder's own parsers
-			@SuppressWarnings("unchecked")
-			Class<MarkupContent<ComponentGroupConfiguration>> markupContentClass = (Class<MarkupContent<ComponentGroupConfiguration>>)(Class<?>)MarkupContent.class;
-			builder.addContentParser(markupContentClass, recursiveMarkupParser);
-			builder.addElementParser(ComponentGroupConfiguration.class, builder.getComponentElementParser());
-
-			// register known value parsers
-			builder.addValueParser(String.class, StringValueParser.INSTANCE);
-			builder.addValueParser(Boolean.class, BooleanValueParser.INSTANCE);
-			builder.addValueParser(Boolean.TYPE, BooleanValueParser.INSTANCE);
-			builder.addValueParser(Integer.class, IntegerValueParser.INSTANCE);
-			builder.addValueParser(Integer.TYPE, IntegerValueParser.INSTANCE);
 
 			// register known element parsers
 			@SuppressWarnings("unchecked")
@@ -102,18 +87,9 @@ public final class TemplateParser implements ContentParser<MarkupContent<Compone
 			// models
 			builder.autoAddComponentElementParser(BackendJsonModelConfiguration.class);
 
-			// close the parsing loop
-			recursiveMarkupParser.setDelegate(new MarkupContentParser<>(builder.getComponentElementParser()));
-			parser = recursiveMarkupParser;
-			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@Override
-	public MarkupContent<ComponentGroupConfiguration> parse(XMLStreamReader reader) throws XMLStreamException {
-		return parser.parse(reader);
 	}
 
 }

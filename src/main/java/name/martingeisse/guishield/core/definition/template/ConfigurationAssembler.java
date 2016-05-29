@@ -4,10 +4,9 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.guiserver.template;
+package name.martingeisse.guishield.core.definition.template;
 
 import java.util.List;
-
 import javax.xml.stream.XMLStreamWriter;
 
 /**
@@ -25,23 +24,16 @@ public final class ConfigurationAssembler {
 	/**
 	 * the componentGroupAccumulator
 	 */
-	private final List<ComponentGroupConfiguration> componentGroupAccumulator;
-
-	/**
-	 * the snippetAccumulator
-	 */
-	private final List<IConfigurationSnippet> snippetAccumulator;
+	private final List<ComponentConfiguration> componentGroupAccumulator;
 
 	/**
 	 * Constructor.
 	 * @param markupWriter the object used to write Wicket markup
 	 * @param componentGroupAccumulator a list that accumulates the component configurations
-	 * @param snippetAccumulator a list that accumulates globally indexed configuration snippets
 	 */
-	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<ComponentGroupConfiguration> componentGroupAccumulator, List<IConfigurationSnippet> snippetAccumulator) {
+	public ConfigurationAssembler(XMLStreamWriter markupWriter, List<ComponentConfiguration> componentGroupAccumulator) {
 		this.markupWriter = markupWriter;
 		this.componentGroupAccumulator = componentGroupAccumulator;
-		this.snippetAccumulator = snippetAccumulator;
 	}
 
 	/**
@@ -66,19 +58,8 @@ public final class ConfigurationAssembler {
 	 * Adds a component to the component group accumulator
 	 * @param component the component to add
 	 */
-	public void addComponentGroup(ComponentGroupConfiguration component) {
+	public void addComponentGroup(ComponentConfiguration component) {
 		componentGroupAccumulator.add(component);
-	}
-
-	/**
-	 * Adds a snippet and returns its handle.
-	 * @param snippet the snippet to add
-	 * @return the handle
-	 */
-	public int addSnippet(IConfigurationSnippet snippet) {
-		int handle = snippetAccumulator.size();
-		snippetAccumulator.add(snippet);
-		return handle;
 	}
 	
 	/**
@@ -87,8 +68,8 @@ public final class ConfigurationAssembler {
 	 * @param componentGroupAccumulator the component group accumulator to use
 	 * @return the new assembler
 	 */
-	public ConfigurationAssembler<ComponentGroupConfiguration> withComponentGroupAccumulator(List<ComponentGroupConfiguration> newComponentGroupAccumulator) {
-		return new ConfigurationAssembler<>(markupWriter, newComponentGroupAccumulator, snippetAccumulator);
+	public ConfigurationAssembler withComponentGroupAccumulator(List<ComponentConfiguration> componentGroupAccumulator) {
+		return new ConfigurationAssembler(markupWriter, componentGroupAccumulator);
 	}
 	
 }

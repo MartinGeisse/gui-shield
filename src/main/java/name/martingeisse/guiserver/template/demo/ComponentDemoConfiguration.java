@@ -7,10 +7,10 @@
 package name.martingeisse.guiserver.template.demo;
 
 import name.martingeisse.guiserver.component.ComponentDemoBorder;
-import name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration;
-import name.martingeisse.guiserver.template.ComponentGroupConfiguration;
 import name.martingeisse.guiserver.template.IConfigurationSnippet;
-import name.martingeisse.guiserver.template.MarkupContent;
+import name.martingeisse.guishield.core.definition.template.AbstractSingleContainerConfiguration;
+import name.martingeisse.guishield.core.definition.template.ComponentConfiguration;
+import name.martingeisse.guishield.core.definition.template.MarkupContent;
 import name.martingeisse.guishield.core.xml.builder.StructuredElement;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindContent;
 import name.martingeisse.guishield.core.xml.generated.annotation.BindElement;
@@ -47,7 +47,7 @@ public class ComponentDemoConfiguration extends AbstractSingleContainerConfigura
 	 * @see name.martingeisse.guiserver.template.AbstractSingleContainerConfiguration#setMarkupContent(name.martingeisse.guiserver.template.MarkupContent)
 	 */
 	@Override
-	public void setMarkupContent(MarkupContent<ComponentGroupConfiguration> markupContent) {
+	public void setMarkupContent(MarkupContent<ComponentConfiguration> markupContent) {
 		throw new UnsupportedOperationException();
 	}
 	
